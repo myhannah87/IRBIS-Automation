@@ -22,7 +22,7 @@ describe('', () => {
    //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow&reviewId=0&appId=InitialAppId');
   
  
-   cy.visit({InitialAppId});
+   cy.visit(InitialAppId);
   
         });
       });  
