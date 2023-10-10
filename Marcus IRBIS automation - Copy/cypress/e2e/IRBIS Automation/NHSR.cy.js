@@ -667,7 +667,7 @@ describe('NHSR', () => {
     })
   })
 })
-        it.only('Waiting PI Repsonse', () => {
+        it('Waiting PI Repsonse', () => {
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
         cy.get('input#username.long')
                 .type('mhannah1').should('have.value', 'mhannah1')  
@@ -678,19 +678,211 @@ describe('NHSR', () => {
         cy.get('input[placeholder="Title"]')
                 .type('My NHSR test')
         cy.get('.odd > :nth-child(2) > a').click()
+        cy.contains(' View Stipulations').should("be.visible").click()
+           //RESPOND TO STIPULATIONS
+        cy.get('input[name="btnRespond"]').should("be.visible").click()
+        cy.get('#cke_1_contents > .cke_wysiwyg_frame').then(function($iframe) {
+              const $body = $iframe.contents().find("body");
+              console.log($body);
+              cy.wrap($body[0]).type("My Response to Stipulations");
+        cy.get('#btnSaveResponse').click()
+
+        cy.get('#BTNRESUBMIT').click()
+        cy.wait(2000)
+        cy.get('.buttonEformYellow').click()
+
+        
+  })
 })
-
-
-
-/*
-        it('Waiting PI Repsonse', () => {
+        it.only('Revised-Resubmitted to IRB', () => {
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
         cy.get('input#username.long')
-                .type('mhannah1').should('have.value', 'mhannah1')  
+                .type('cdcantre').should('have.value', 'cdcantre')  
         cy.get('input#password.long')
-                .type('test{Enter}')  
+                .type('test{Enter}') 
+
+        cy.get('td[data-title="PI Responses"] > .bucket > :nth-child(2) > table > tbody > :nth-child(6) > .countTotal > a').click()
+        cy.wait(1000)
+        cy.get('#bucketDataTable_filter > label > input').type('My NHSR Cypress Test')
+        cy.get('#bucketDataTable > tbody > .odd > :nth-child(1) > a').click()
+        cy.wait(3000)
+        // Get window object
+        cy.window().then((win) => {
+                // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, 'open', url => 
+                {
+                // change window location to be same as the popup url
+        win.location.href = Cypress.config().baseUrl + url;
+                }).as("popup") // alias it with popup, so we can refer it with @popup
+                })
+                
+                // Click button which triggers javascript's window.open() call
+        cy.get('#swimLaneReview0 > .swimlane1 > :nth-child(1)').click()
+                // Make sure that it triggered window.open function call
+        cy.get("@popup").should("be.called")
+        //Create a review
+  cy.get('#navNextStep').click()
+  cy.get('#hasReviewTypes').should("be.visible")
+  cy.get('#reviewTypeId')
+  .should('contain', 'Select Review Type...')
+           .and('contain', 'Not Full Board (Expedited, Exempt, NHSR, other)')
+           .and('contain', 'Full Board')
+           .select('Not Full Board (Expedited, Exempt, NHSR, other)')
+  cy.get('#btnCreateReview').click() 
+  cy.wait(2000)
 
 
+  //Verify header info
+    
+  cy.get('#irbInfo').should("be.visible")
+  cy.get('#irbInfo > :nth-child(3) > :nth-child(1)').should("be.visible")
+  cy.get('#irbInfo > :nth-child(3) > :nth-child(2)').should("be.visible")
+  cy.get('#irbInfo > :nth-child(3) > :nth-child(3)').should("be.visible")
+  //Verify left rail
+  cy.get('#navContainer').should("be.visible")
+  cy.get('#navReviewType').should("be.visible")
+  cy.get('#navReviewConditions').should("be.visible")
+  cy.get('#navNextStep').should("be.visible")
+  cy.get('#navApplication').should("be.visible")
+  cy.get('#navLibrary').should("be.visible")
+  cy.get('#navStipulations').should("be.visible")
+  cy.get('#navExpandCollapse').should("be.visible")
+  cy.get('#navItemList').should("be.visible")
+  cy.get('#navOptions').should("be.visible")
+  cy.get('#navPIResponses').should("be.visible")
+  cy.get('#navReviewResult').should("be.visible")
+  cy.get('#navReviewNotes').should("be.visible")
+  cy.get('#navLetter').should("be.visible")
+
+
+  //Verify review conditions -> REVIEW
+  cy.get('#navReviewConditions').click()
+  cy.get('#stopsHeader').should("be.visible")
+  cy.get('#optionsList > :nth-child(1)').should("be.visible")
+  cy.get('#stopListStipulations').should("be.visible")
+  cy.get('#stopListCategory').should("be.visible")
+  cy.get('#stopListLetterEmail').should("be.visible")
+  cy.get('#stopListPIResponse').should("be.visible")
+  cy.get('#stopListChecklist').should("be.visible")
+  cy.get('#stopListPRIResponse').should("be.visible")
+  cy.get('#stopListModExpiration').should("be.visible")
+
+  //Verify review conditions -> SUBMISSION
+  cy.get('#optionsList > :nth-child(2)').should("be.visible")
+  cy.get('#stopListFlags').should("be.visible")
+  cy.get('#stopListExternalInstitutions').should("be.visible")
+  cy.get('#stopListRouting').should("be.visible")
+  cy.get('#stopListPrisoners').should("be.visible")
+
+  //Verify review conditions -> COI 
+  cy.get('#optionsList > :nth-child(3)').should("be.visible")
+  cy.get('#stopListCOI').should("be.visible")
+  cy.get('#stopListManagementPlan').should("be.visible")
+  cy.get('#stopListHSP').should("be.visible")
+  cy.get('#stopListGCP').should("be.visible")
+  
+  
+/*
+  //PI Responses
+  cy.viewport(1200, 612) 
+  cy.get('#navPIResponses').click()
+  cy.get('#PIResponseHeader').should("be.visible")
+  cy.get('#PIResponseHeader > :nth-child(2) > :nth-child(1)').should("be.visible")
+  cy.get('#PIResponseHeader > :nth-child(2) > :nth-child(2)').should("be.visible")
+  cy.get('#PIResponseHeader > :nth-child(2) > :nth-child(3)').should("be.visible")
+  cy.get('.answerForStip > :nth-child(1)').should("be.visible")
+  cy.get('.compareClick').should("be.visible")
+  cy.get(':nth-child(1) > .nextChange').should("be.visible")
+  cy.get('.stipDiv > :nth-child(1)').should("be.visible")
+  cy.get('.stipDiv > :nth-child(2) > p').should("be.visible")
+  cy.get('.stipDiv > :nth-child(2)').should("be.visible")
+  cy.get('.responseDiv > :nth-child(1)').should("be.visible")
+  cy.get('.responseDiv > :nth-child(2) > p').should("be.visible")
+  cy.get('.responseDiv > :nth-child(2)').should("be.visible")
+  cy.get('.actionDiv > :nth-child(1)').should("be.visible")
+  cy.get('.actionDiv > :nth-child(2)').should("be.visible")
+  cy.get('.resolve').should("be.visible")
+  cy.get('.resend').should("be.visible")
+  cy.get('.withdraw').should("be.visible")
+  cy.get('.responseConfirm').should("be.visible")
+  
+  cy.get('.resolve').click()
+  cy.get('.responseConfirm').click()
+  cy.get('#saveResponseConfirmations').click()
+
+  cy.wait(3000)
+ */
+
+  //Record Review Result (minor stip w/o stip)
+  cy.get('#navReviewResult').click()
+  cy.get('#reviewResult3').click()
+
+  cy.get('#navReviewNotes').click()
+  cy.wait(3000)
+ 
+  cy.reload() 
+  cy.wait(5000) 
+
+  //Draft Letter 
+   cy.get('#navNextStep').click()
+   cy.get('#letterTypeId').select('Minor Stips - Expedited')
+   cy.get('#btnDraftLetter').click()  
+   cy.get('#btnFinalizeLetterModal').click()
+   cy.get('[aria-labelledby="ui-dialog-title-2"] > .ui-dialog-buttonpane > .ui-dialog-buttonset > .btn-info').click()
+   cy.get('.body > div').and('contain', 'You have no stipulations in place.')
+   cy.get('.closeFinal').click()
+
+   cy.get('#btnDelete').click()
+
+  //Record Review Result -> Select NHSR
+  cy.get('#navReviewResult').click()
+  cy.get('#reviewResult4').click()
+  cy.get('#navReviewNotes').click()
+  cy.wait(3000)
+
+ //Study Specific Findings
+  cy.get('#cke_48_contents > .cke_wysiwyg_frame').then(function($iframe) {
+    const $body = $iframe.contents().find("body");
+    console.log($body);
+    cy.wrap($body[0]).and('contain', 'My Study Specific Findings!')
+
+      //Submission Specific Findings 
+  cy.get('#cke_49_contents > .cke_wysiwyg_frame').then(function($iframe) {
+    const $body = $iframe.contents().find("body");
+    console.log($body);
+    cy.wrap($body[0]).and('contain', 'My Submission Specific Findings');
+
+    cy.get(':nth-child(5) > .subHeader').should("be.visible")  
+    cy.get('.meetingNotes').should("be.visible")
+  
+    
+    
+  cy.get('#navNextStep').click()
+  cy.get('#letterTypeId')
+  .should('contain', 'Select Template Type...')
+           .and('contain', '118 Approval Letter')
+           .and('contain', 'Not Human Subjects Research')
+           .and('contain', 'Emergency Use Ackn.')
+           .select('Not Human Subjects Research')
+  cy.get('#btnDraftLetter').click()      
+
+   //Verify and Finalize letter
+    cy.get('#sent_to_email').should("be.visible")
+    cy.get('#sent_to_email2').should("be.visible")
+    cy.get('.cke_wysiwyg_frame').should("be.visible")
+    cy.get('.letterSubHeader').should('contain', 'Minor Stips - Expedited')
+    cy.get('#btnViewPDF').should("be.visible")
+    cy.get('#btnDelete').should("be.visible")
+    cy.get('#btnSaveLetter').should("be.visible")
+    cy.get('#btnSendToChair').should("be.visible")
+    cy.get('#btnFinalizeLetterModal').should("be.visible")
+    cy.get('#btnFinalizeLetterModal').click()
+    cy.get('.ui-dialog-content').should("be.visible")
+    cy.get('.ui-dialog-buttonset > .btn-info').click()
+     
+
+
+          })
         })
-
-*/
+      })
+ 
