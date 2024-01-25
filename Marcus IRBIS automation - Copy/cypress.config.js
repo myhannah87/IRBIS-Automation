@@ -2,7 +2,7 @@ module.exports = {
   e2e: {
 
     "baseUrl": 'https://orisdev.research.unc.edu/irb_maint/',
-    //"baseUrl": "https://orisdev.research.unc.edu/irb_maint",
+    //"baseUrl": 'https://orisdev.research.unc.edu/irb_maint/index.cfm?',
     //watchForFileChanges:false,
     failOnStatusCode: false,
     setupNodeEvents(on, config) {

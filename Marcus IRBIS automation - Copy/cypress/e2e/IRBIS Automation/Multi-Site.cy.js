@@ -1,7 +1,7 @@
 describe('Login', () => {
   beforeEach (() => {
-    //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm');
-    cy.visit('https://orisdev.research.unc.edu/irb_maint/eform_screens.cfm?MasterId=383070&ScreenId=2');
+    cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm');
+    //cy.visit('https://orisdev.research.unc.edu/irb_maint/eform_screens.cfm?MasterId=383070&ScreenId=2');
     //cy.get('title')
       //  .invoke('text')
         //.should('equal', '\nIRB \n') 
@@ -15,7 +15,7 @@ describe('Login', () => {
 
 describe('Create Multi-Site Application',  () => {
   it('Create Multi-Site', () => {
-    /*
+    
     cy.get('#nav > :nth-child(2) > a').click()
     cy.get('#dashboard').should("be.visible")
     cy.get('[style="padding: 10px 10px 5px 10px;"]').should("be.visible")
@@ -102,13 +102,13 @@ describe('Create Multi-Site Application',  () => {
    .as('masterId')
    cy.log('printing the id').then(function() {
    cy.log(`MasterId is: ${this.masterId}`) 
-*/
+
    cy.get('[style="width:95%; text-align: left; padding: 0 0 10px 20px;"] > a').click()
    cy.get('[qid="q_7"] > .label > a > img').click()
    cy.get('#personnel_results').should("be.visible")
 
 
-/*
+
    //INSERTS EXTERNAL WITHOUT SPONSORCODE
    cy.get('[style="width:95%; text-align: left; padding: 0 0 10px 20px;"] > a').click()
    cy.get('[qid="q_7"] > .copy > #q_2_7').type('Austin', { force: true })
@@ -121,7 +121,7 @@ describe('Create Multi-Site Application',  () => {
    cy.get('form > #tbl_2_4 > tbody > :nth-child(14) > .copy > [type="submit"]').click()
 
    cy.get('[name="submit0"]').click()
-*/
+
 
 /*
    cy.get('@masterId').then(Number)
@@ -144,7 +144,7 @@ describe('Create Multi-Site Application',  () => {
 
 
 
-   /*
+   
 
 //3.FUNDING SOURCES
     cy.get('[qid="h_1205"] > [width="99%"]').should("be.visible")
@@ -194,7 +194,7 @@ describe('Create Multi-Site Application',  () => {
     cy.get('[qid="h_1940"] > [width="99%"]').should("be.visible")
     cy.get('[qid="h_1940"] > [width="99%"] > a').should("be.visible")
     cy.get('[inputvalue="1"] > #q_98_1940').click()
-    cy.get('[inputvalue="1"] > #q_98_2248').click()
+    cy.get('[inputvalue="0"] > #q_98_2248').click()
     cy.get('[qid="h_1941"] > [width="99%"]').should("be.visible")
     cy.get('[inputvalue="1"] > #q_98_1941').click()
     cy.get('#tbl_98_1257 > tbody > :nth-child(1) > td.copy > [style="position: relative; display: block;"] > div').should("be.visible")
@@ -1397,7 +1397,7 @@ describe('Create Multi-Site Application',  () => {
         cy.get('.proceedForm').should("be.visible")
         cy.get('.buttons > .buttonEformYellow').click()
  
-        */
+        
 
 
 
@@ -1405,7 +1405,7 @@ describe('Create Multi-Site Application',  () => {
 
                                                                                                                                                                                       });
                                                                                                                                                                                   });
-                                                                                                                                                                  /*              });
+                                                                                                                                                                                });
                                                                                                                                                                               });
                                                                                                                                                                             }); 
                                                                                                                                                                           }); 
@@ -1489,7 +1489,7 @@ describe('Create Multi-Site Application',  () => {
               });  
             });     
           });      
-          */
+          
           
     
     
