@@ -200,12 +200,5 @@ it('Review Report', () => {
 
         cy.get('#btnSubmit').click()
 
-        
-
-
-
-
-
-
      })
   }) 

@@ -340,7 +340,7 @@
        
 
      
-        it.only('Verify Study History Screen', () => {  
+it('Verify Study History Screen', () => {  
         cy.viewport(1400, 750) 
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
         cy.get('input#username.long')
@@ -450,7 +450,7 @@
         }) 
         
 
-        it.only('Verify Application/Review popup', () => {
+it('Verify Application/Review popup', () => {
         cy.viewport(1400, 750) 
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
         //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow&reviewId=531057&appId=416502');
@@ -636,7 +636,7 @@
    // })
   //})
 
-        it.only('Waiting PI Repsonse', () => {
+it.only('Waiting PI Repsonse', () => {
         cy.viewport(1400, 750)         
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
         cy.get('input#username.long')
@@ -665,7 +665,7 @@
   })
 })
      
-        it.only('Revised-Resubmitted to IRB', () => {
+it('Revised-Resubmitted to IRB', () => {
         cy.viewport(1400, 750) 
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
         cy.get('input#username.long')

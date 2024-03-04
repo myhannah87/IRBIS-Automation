@@ -243,7 +243,7 @@ describe('Login as Committee Member', () => {
      cy.url().as("reviewWindow");
     
     //Verify header info
-    cy.wait(3000)
+    cy.wait(1000)
     cy.get('#irbInfo').should("be.visible")
     cy.get('#irbInfo > :nth-child(3) > :nth-child(1)').should("be.visible")
     cy.get('#irbInfo > :nth-child(3) > :nth-child(2)').should("be.visible")
@@ -313,6 +313,7 @@ describe('Login as Committee Member', () => {
     cy.get('.ui-dialog-titlebar-close > .ui-icon').click()
     
     //DELETE PRIMARY REVIEW SUMMARY
+    cy.wait(1000)
     cy.get('#primaryReviewerSummary').click()
     cy.get('#summaryTxt').should('contain', 'My Primary Reviewer Summary')
     cy.get('#btnSummaryEdit').click()
@@ -333,7 +334,8 @@ describe('Login as Committee Member', () => {
     cy.get('#btnSummaryClose').click()
     cy.get('.ui-dialog-titlebar-close > .ui-icon').click()
 
-     //DELETE PRIMARY REVIEW SUMMARY
+     //DELETE SECONDARY REVIEW SUMMARY
+     cy.wait(1000)
      cy.get('#secondaryReviewerSummary').click()
      cy.get('#summaryTxt').should('contain', 'My Secondary Reviewer Summary')
      cy.get('#btnSummaryEdit').click()
@@ -383,12 +385,7 @@ describe('Login as Committee Member', () => {
         })
      cy.viewport(1400, 750)
 
-    //VERIFY COMMITTEE AREA
-    cy.get('#navCommittee').click()
-    cy.get('#selectCommittee').should('contain', 'Board E')
-    cy.get('#committeeDate12').should('contain', '1/10/2023')
-
-    //VERIFY REVIEW RESULTS
+        //VERIFY REVIEW RESULTS
     cy.get('#navReviewResult').click()
     cy.get('#selectResult > :nth-child(1)').should('contain', 'Review Result')
     cy.get('#reviewResult1').should('contain', 'Approved')
@@ -398,14 +395,21 @@ describe('Login as Committee Member', () => {
     cy.get('#expirationDateContainer > span').should('contain', 'Expiration Date')
     cy.get('#expirationDateContainer > .reviewResultContainer > div').should('contain', '01/09/2024')
 
+    //VERIFY COMMITTEE AREA
+    cy.get('#navCommittee').click()
+    cy.get('#selectCommittee').should('contain', 'Board E')
+    cy.get('#committeeDate12').should('contain', '1/10/2023')
+
     //VERIFY REVIEW NOTES
     cy.get('#navReviewNotes').click()
     cy.get(':nth-child(2) > .subHeader').should('contain', 'Study Specific Findings')
     cy.get(':nth-child(3) > .subHeader').should('contain', 'Submission Specific Findings')
     cy.get(':nth-child(5) > .subHeader').should('contain', 'Internal Meeting Notes')
 
+    //VERIFY LETTER
+    cy.get('#navLetter').click()
+    cy.get('.letterSubHeader').should('contain', 'Full Board Approval (Initial)')
 
- 
 
       })
     }); 

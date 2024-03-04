@@ -1,8 +1,10 @@
 module.exports = {
   e2e: {
-
+    
+    "defaultCommandTimeout": 10000,
+   
     "baseUrl": 'https://orisdev.research.unc.edu/irb_maint/',
-    //"baseUrl": 'https://orisdev.research.unc.edu/irb_maint/index.cfm?',
+    //"baseUrl": 'https://orisdev.research.unc.edu/irb/index.cfm?',
     //watchForFileChanges:false,
     failOnStatusCode: false,
     setupNodeEvents(on, config) {

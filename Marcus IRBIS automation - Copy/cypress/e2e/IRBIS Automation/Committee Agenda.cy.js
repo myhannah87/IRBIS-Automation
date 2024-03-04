@@ -128,13 +128,13 @@ it('Verify Committee Agenda', () => {
       })
     })
   })
-})   
+//})   
 
 //});
 
   
 
-it.only('Committee Availability', () => {
+it('Committee Availability', () => {
   cy.viewport(1400, 750) 
   cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm');
     //cy.get('title')
@@ -232,6 +232,7 @@ it.only('Committee Availability', () => {
   cy.get('[aria-labelledby="ui-dialog-title-calendarModal"] > .ui-dialog-titlebar > .ui-dialog-titlebar-close > .ui-icon').click()
 
  })
+})   
 
 
 
