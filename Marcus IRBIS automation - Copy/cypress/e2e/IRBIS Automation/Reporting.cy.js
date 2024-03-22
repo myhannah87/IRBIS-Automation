@@ -96,6 +96,7 @@ it('Study Report', () => {
 
 it('Submission Report', () => {
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=irbis_reporting.irb_reports.index');
+       // cy.visit('https://orisdev.research.unc.edu/irb/index.cfm?event=irbis_reporting.irb_reports.index');
 
         cy.get('input#username.long')
                 .type('cdcantre').should('have.value', 'cdcantre')  

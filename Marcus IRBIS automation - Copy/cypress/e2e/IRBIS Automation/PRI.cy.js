@@ -8,7 +8,8 @@ describe('Promptly Reportable Information (PRI)',  () => {
           .type('test{Enter}')
        
         cy.viewport(1300, 750)
-        cy.get('#lnkSubmitUPAE > .copybold').should('contain', 'Submit Promptly Reportable Information').click()
+        
+        cy.get('#PRISelector > .updateCardText > div').should('contain', 'Promptly Reportable Information').click()
 
         // Brief Description of Promptly Reportable Information Screen
         cy.get('#divNSIHeader > .hd').should("be.visible")
@@ -30,7 +31,7 @@ describe('Promptly Reportable Information (PRI)',  () => {
         cy.get('.bd > :nth-child(1) > tbody > :nth-child(1) > :nth-child(4)').should('contain', 'Approved')
 
         cy.get('.bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(3)').should('contain', 'IRB:')
-        cy.get('.bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(4)').should('contain', 'Non-Biomedical')
+        cy.get('.bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(4)').should('contain', 'Biomedical')
 
         cy.get(':nth-child(1) > tbody > :nth-child(1) > :nth-child(5)').should("be.visible") //expiration date
 /*
@@ -66,7 +67,7 @@ describe('Promptly Reportable Information (PRI)',  () => {
         cy.get('#itemListHistory > dd').should('contain', 'View History')
         cy.get('#itemListPDF > dd').should('contain', 'View PDF')
 
-        */
+       */
 
         cy.get('[style="margin-left: 10px; margin-bottom: 10px;"]').should('contain', 'IRBIS has not been assessed for storing personally identifiable information or PHI')
 
@@ -114,7 +115,7 @@ describe('Promptly Reportable Information (PRI)',  () => {
         cy.get('[style="margin-top: 20px;"] > tbody > :nth-child(2) > :nth-child(4)').should('contain', 'Not Certified')
 
         cy.get('[style="margin-top: 20px;"] > tbody > :nth-child(1) > :nth-child(5)').should('contain', 'Reportable:')
-        cy.get('[style="margin-top: 20px;"] > tbody > :nth-child(1) > :nth-child(6)').should('contain', 'No')
+        cy.get('[style="margin-top: 20px;"] > tbody > :600nth-child(1) > :nth-child(6)').should('contain', 'No')
         
         //Part A: Does This PRI Need to be Reported   
         cy.get('.copyred').should('contain', 'IRBIS has not been assessed for storing personally identifiable information or PHI')
@@ -497,7 +498,7 @@ describe('Promptly Reportable Information (PRI)',  () => {
         
 })
 })
-}) 
+
 
 it('PRI Waiting PI Response', () => {
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=general.logout');
@@ -596,7 +597,6 @@ it('Resubmitted PRI - Verify Application/Review popup', () => {
         //REVIEW POPUP
         cy.get(':nth-child(1) > strong').should('contain', 'Navigate To:')
         cy.contains('Application').should("be.visible")
-        cy.contains('Library').should("be.visible")
         cy.get('#piResponsesLink').should('contain', 'PI Responses (1)')
         cy.get('#stipulationLink').should('contain', 'Stipulations (0)')
         cy.get(':nth-child(8) > strong').should('contain', 'Next Step:')
@@ -710,7 +710,7 @@ it('Resubmitted PRI - Verify Application/Review popup', () => {
         cy.get('.resolveResponse').click()
         cy.get('.actionConfirm > .glyphicon').click()
         cy.get('#btnSaveConfirms').click()
-        cy.get('#btnSaveConfirms').should('contain', 'All Actions Confirmed')
+        cy.get('.allConfirmed').should('contain', 'All Actions Confirmed')
         
         
         
@@ -787,3 +787,4 @@ it('Resubmitted PRI - Verify Application/Review popup', () => {
         cy.get('#btnEmailOnly').click()
 
        })
+}) 

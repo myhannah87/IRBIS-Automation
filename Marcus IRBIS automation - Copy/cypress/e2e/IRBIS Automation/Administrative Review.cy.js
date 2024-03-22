@@ -178,7 +178,7 @@ describe('Administrative Review',  () => {
       //  cy.wait(3000) 
    })
 
-       //ADMINISTRATIVE REVIEW - STUDY HISTORY SCREEN/SUBMISSION DETIALS
+       //ADMINISTRATIVE REVIEW - STUDY HISTORY SCREEN/SUBMISSION DETAILS
        it('Administrative Review - Verify Study History/Submission Details', () => {
         cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?');
         cy.get('input#username.long')
@@ -413,7 +413,7 @@ describe('Administrative Review',  () => {
         cy.get('#stipIntructions').should('contain', 'INSTRUCTIONS: Please review and respond to the stipulations as follows.')
         
         cy.get('.\\32 B').should('contain', 'B. Total number of subjects included/enrolled to date')
-        cy.get('.\\32 B > div > span').should('contain', '2')
+        cy.get('[style="display: block;"] > :nth-child(2) > span').should('contain', '2')
         cy.get('#stipContainer2B').should("be.visible")
         cy.get('.respondToStip').click()
         
@@ -522,7 +522,7 @@ describe('Administrative Review',  () => {
          
          cy.get('#divAdminReviewForm2 > .hd').should('contain', 'Progress Report')
          cy.get('#divAdminReviewForm2 > .bd > .questionHouse > [style="display: inline-block;"]').should('contain', 'B. Total number of subjects included/enrolled to date')
-         cy.get('.\\32 B > div > .readOnlyClass').should('contain', '2')
+         cy.get('[style="display: inline-block;"] > :nth-child(2) > .readOnlyClass').should('contain', '2')
          cy.get(':nth-child(3) > p').should('contain', 'My test AR stip for question 2B')
          cy.get('.responseContainer > p').should('contain', 'My test AR Response for question 2B')
 
