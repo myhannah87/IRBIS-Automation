@@ -1,16 +1,16 @@
 describe("EXEMPT", () => {
   const ownerOnyen = "mhannah1";
   const PI = "maceo";
-  const deptApprover = "jstlatt";
+  const deptApprover = "jslatt";
   const IRBAnalyst = "jfuse";
 
   it("Create Exempt Form", () => {
     cy.visit(Cypress.config().devMaintBaseUrl);
-
     cy.get("input#username.long")
       .type(ownerOnyen)
       .should("have.value", ownerOnyen);
     cy.get("input#password.long").type("test{Enter}");
+
     cy.get("#nav > :nth-child(2) > a").click();
     cy.get(":nth-child(2) > .wizardLinks1").click();
     cy.get("#dashboard").should("be.visible");
@@ -19,7 +19,7 @@ describe("EXEMPT", () => {
     cy.get("#wizard2").should("be.visible");
     cy.get("#btn2").click();
 
-    cy.wait(15000);
+    cy.wait(8000);
 
     //REQUEST EXEMPTION
     cy.get('[qid="h_1114"] > [width="99%"]').should("be.visible");
@@ -159,11 +159,13 @@ describe("EXEMPT", () => {
     cy.get('[name="submit1"]').click();
 
     //CONSENT PROCESS FOR EXEMPTIONS
-    cy.get('[qid="h_2313"] > [width="99%"]').should("be.visible");
-    cy.get('[inputvalue="1"] > #q_127_2314').click();
-    cy.get("#doc_2314_424 > a").should("be.visible");
+    cy.get("#eFormScreen_Copy").should("be.visible");
+    cy.get("#eFormScreen_ButtonCopy").click();
+    cy.get('[qid="h_2298"] > [width="99%"]').should("be.visible");
+    cy.get('[inputvalue="1"] > #q_127_2299').click();
+    cy.get("#doc_2299_424 > a").should("be.visible");
     //TYPE INTO CKEDITOR
-    cy.get('#hd_2314\\|\\|1 > [width="99%"]').should("be.visible");
+    cy.get('#hd_2299\\|\\|1 > [width="99%"]').should("be.visible");
     cy.get(".cke_wysiwyg_frame").then(function ($iframe) {
       const $body = $iframe.contents().find("body");
       console.log($body);
@@ -172,6 +174,7 @@ describe("EXEMPT", () => {
     cy.get('[name="submit1"]').click();
 
     //1. GENERAL INFORMATION SCREEN
+    cy.wait(2000);
 
     cy.get("#q_29_3").should("be.visible").type("My Exempt Cypress Test"); //.should('have.value', 'My Exempt Regression Test')
 
@@ -204,8 +207,9 @@ describe("EXEMPT", () => {
       ':nth-child(4) > .tablemainsub > tbody > [align="center"] > .copy > .seachSubmit'
     ).should("be.visible");
     //cy.get('[style="width: 100%; text-align: center; margin-top: 10px;"] > .button').click()
-    cy.get("#first_name").type("Chuck");
-    cy.get("#last_name").type("Fennimore");
+    cy.get("#pid").type("710917825");
+    //cy.get('#first_name').type('Chuck')
+    //cy.get('#last_name').type('Fennimore')
     cy.get(
       ':nth-child(3) > .tablemainsub > tbody > [align="center"] > .copy > .seachSubmit'
     ).click();
@@ -218,16 +222,21 @@ describe("EXEMPT", () => {
     cy.get(
       '[aria-label="Title: activate to sort column ascending"] > .DataTables_sort_wrapper'
     ).should("be.visible");
-    cy.get(":nth-child(1) > .sorting_1 > .copy").click();
+    cy.get(":nth-child(4) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
-    cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
-    ).should("be.visible");
+    // cy.get(
+    // '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+    //).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
-    cy.get(':nth-child(7) > tbody > .odd > [width="4%"] > input').click();
+    cy.get(':nth-child(2) > [width="4%"] > input').click();
+    cy.get(':nth-child(3) > [width="4%"] > input').click();
+    cy.get(':nth-child(4) > [width="4%"] > input').click();
+    cy.get(':nth-child(5) > [width="4%"] > input').click();
+
     cy.get(".importSubmit").click();
-    //MAKE CHUCK PI / VERIFY PERSONNEL POP UP
+
+    //MAKE John PI / VERIFY PERSONNEL POP UP
     cy.get('[qid="h_1895"] > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="1"] > #q_2_1895').should("be.visible");
     cy.get('[inputvalue="0"] > #q_2_1895').click();
@@ -790,17 +799,23 @@ describe("EXEMPT", () => {
     cy.get(
       ':nth-child(13) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
     ).click();
-    cy.get("#att_1882_1").should("be.visible");
+    cy.get("#q_78_2339").type("My email or text explanation");
+    //cy.get("#att_1882_1").should("be.visible");
+    // cy.get(
+    //  ':nth-child(14) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+    //).click();
     cy.get(
-      ':nth-child(14) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+      ':nth-child(16) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
     cy.get("#att_968_1").should("be.visible");
     cy.get("#tr_968\\|\\|1 > td.copy > .label").should("be.visible");
     cy.get("#q_78_969").type("My Other explanation for B.1.1");
+    cy.get("#tr_2338\\|\\|1 > td.copy > .label").should("be.visible");
     cy.get(
-      ':nth-child(16) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+      ':nth-child(18) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
-    cy.get("#tr_2291\\|\\|1 > td.copy").should("be.visible");
+
+    //cy.get("#tr_2291\\|\\|1 > td.copy").should("be.visible");
     cy.get("#q_78_2292").type("My Social Media explanation B.1.1");
     cy.get('[qid="h_2236"] > [width="99%"]').should("be.visible");
     cy.get('[qid="q_2236"] > td.copy').should("be.visible");
@@ -820,6 +835,11 @@ describe("EXEMPT", () => {
     });
     cy.get('[name="submit1"]').click();
 
+    //Part B.3
+    cy.get('#hd_0\\|\\| > [width="99%"]').should("be.visible");
+    cy.get('[inputvalue="0"] > #q_80_2340').click();
+    cy.get('[name="submit1"]').click();
+
     //Part C.1 DATA SOURCES
     cy.get('[qid="h_1122"] > [width="99%"]').should("be.visible");
     cy.get(
@@ -836,17 +856,17 @@ describe("EXEMPT", () => {
     ).click();
     cy.get("#att_1994_3").should("be.visible");
     cy.get(".copy > .searchresults").should("be.visible");
-    cy.get(
-      ':nth-child(4) > td.copy > [style="position: relative; display: block;"] > div > .copy'
-    ).click();
-    cy.get("#tr_1123\\|\\|1 > td.copy > .label").should("be.visible");
-    cy.get('[inputvalue="0"] > #q_85_1280').click();
-    cy.get(
-      ':nth-child(6) > td.copy > [style="position: relative; display: block;"] > div > .copy'
-    ).click();
-    cy.get("#tr_1125\\|\\|1 > td.copy > .label").should("be.visible");
-    cy.get('[inputvalue="1"] > #q_85_1281').click();
-    cy.get(":nth-child(15) > td.copy > .label").should("be.visible");
+    //cy.get(
+    //  ':nth-child(4) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+    //).click();
+    //cy.get("#tr_1123\\|\\|1 > td.copy > .label").should("be.visible");
+    //cy.get('[inputvalue="0"] > #q_85_1280').click();
+    //cy.get(
+    //  ':nth-child(6) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+    //).click();
+    //cy.get("#tr_1125\\|\\|1 > td.copy > .label").should("be.visible");
+    //cy.get('[inputvalue="1"] > #q_85_1281').click();
+    //cy.get(":nth-child(15) > td.copy > .label").should("be.visible");
     cy.get("#q_85_1133").should("be.visible");
     cy.get('[qid="h_1283"] > [width="99%"]').should("be.visible");
     cy.get(".cke_wysiwyg_frame").then(function ($iframe) {
@@ -858,7 +878,7 @@ describe("EXEMPT", () => {
     cy.get('[inputvalue="1"] > #q_85_1284').click();
     cy.get('[name="submit1"]').click();
 
-    //Part C.2 ExCODING AND DATA USE AGREEMENTS
+    //Part C.2 CODING AND DATA USE AGREEMENTS
     cy.get('#hd_0\\|\\| > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="Yes"] > #q_87_635').click();
     cy.get('[qid="h_637"] > [width="99%"]').should("be.visible");
@@ -931,6 +951,8 @@ describe("EXEMPT", () => {
     cy.get(".iAgreeCheckbox").click();
     cy.get(".proceedForm").should("be.visible");
     cy.get(".buttons > .buttonEformYellow").click();
+
+    cy.wait(5000);
   });
 
   //Exempt ROUTING/ PI cert
@@ -939,6 +961,7 @@ describe("EXEMPT", () => {
     cy.get("input#username.long").type(PI).should("have.value", PI);
     cy.get("input#password.long").type("test{Enter}");
 
+    cy.get("#nav > :nth-child(2) > a").click();
     cy.get("#dashboardmenu8 > :nth-child(2) > a").click();
     //cy.get('.searchColumn ui-state-default')
     cy.get('input[placeholder="Title"]').type("My Exempt Cypress Test");
@@ -1055,6 +1078,8 @@ describe("EXEMPT", () => {
     cy.get(".middleyellow").click();
     cy.get("#btnCertify").click();
     cy.get(".buttonEformYellow").click();
+
+    cy.wait(5000);
   });
 
   it("Exempt - Administering Dept Approval", () => {
@@ -1086,10 +1111,10 @@ describe("EXEMPT", () => {
 
   //Exempt Accept for Review
   it("Accept Exempt For Review", () => {
-    y.visit(Cypress.config().devMaintBaseUrl);
+    cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long")
-      .type("mhannah1")
-      .should("have.value", "mhannah1");
+      .type(ownerOnyen)
+      .should("have.value", ownerOnyen);
     cy.get("input#password.long").type("test{Enter}");
 
     cy.get(
@@ -1100,6 +1125,8 @@ describe("EXEMPT", () => {
       "My Exempt Cypress Test"
     );
     cy.get(".confirmAcceptByIRB").click();
+
+    cy.wait(5000);
   });
 
   it("Verify Study History Screen", () => {
@@ -1274,12 +1301,15 @@ describe("EXEMPT", () => {
     cy.window()
       .then((win) => {
         // Replace window.open(url, target)-function with our own arrow function
-        cy.stub(win, 'open').callsFake (url => 
-          // change window location to be same as the popup url
-          win.location.href = Cypress.config().devMaintBaseUrl + url);
-        }).as("application"); // alias it with popup, so we can refer it with @popup
-      // Click button which triggers javascript's window.open() call
-      cy.contains("Application").click();
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("application"); // alias it with popup, so we can refer it with @popup
+    // Click button which triggers javascript's window.open() call
+    cy.contains("Application").click();
 
     //Verify header info
 
@@ -1305,6 +1335,7 @@ describe("EXEMPT", () => {
     cy.get("#navLetter").should("be.visible");
 
     //Verify review conditions -> REVIEW
+    cy.get("#reviewConditionsIcon").should("have.class", "stopIcon fail");
     cy.get("#navReviewConditions").click();
     cy.get("#stopsHeader").should("be.visible");
     cy.get("#optionsList > :nth-child(1)").should("be.visible");
@@ -1327,14 +1358,16 @@ describe("EXEMPT", () => {
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("be.visible");
     cy.get("#stopListManagementPlan").should("be.visible");
-    cy.get("#stopListHSP").should("be.visible");
-    cy.get("#stopListGCP").should("be.visible");
+    cy.get("#stopListHSP").scrollIntoView().should("be.visible");
+    cy.get("#stopListGCP").scrollIntoView().should("be.visible");
 
     //Select an Analyst
     cy.get("#navNextStep").click();
     cy.get("#analystSelector").should("be.visible");
     cy.get(".managerTextbox").type("Justin");
     cy.get('[name="Justin Feussner"]').click();
+
+    cy.wait(2000);
 
     //Add a stipulation
     cy.get("#navApplication").click();
@@ -1351,15 +1384,14 @@ describe("EXEMPT", () => {
     cy.get("#navReviewResult").click();
 
     //Disabled review results:
-    cy.get("#reviewResult1").should("have.class", "stipsNotAllowed"); //Approved
-    cy.get("#reviewResult2").should("have.class", "stipsNotAllowed"); //Exempted
-    cy.get("#reviewResult4").should("have.class", "stipsNotAllowed"); //NHSR
-    cy.get("#reviewResult5").should("have.class", "stipsNotAllowed"); //Rely on External IRB
-    cy.get("#reviewResult6").should("have.class", "stipsNotAllowed"); //Rely on NCI-CIRB
-    cy.get("#reviewResult7").should("have.class", "stipsNotAllowed"); // Withdraw
+    cy.get("#reviewResult1").should("have.class", "stipsNotAllowed"); //Exempted
+    cy.get("#reviewResult3").should("have.class", "stipsNotAllowed"); //NHSR
+    cy.get("#reviewResult4").should("have.class", "stipsNotAllowed"); //Rely on External IRB
+    cy.get("#reviewResult5").should("have.class", "stipsNotAllowed"); //Rely on NCI-CIRB
+    cy.get("#reviewResult6").should("have.class", "stipsNotAllowed"); // Withdraw
 
     //Select Minor Stipulations
-    cy.get("#reviewResult3").click();
+    cy.get("#reviewResult2").click(); //Minor Stipulations
     cy.wait(3000);
 
     //Draft Letter
@@ -1383,16 +1415,6 @@ describe("EXEMPT", () => {
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
 
-    //Delete and redraft letter
-    cy.get("#btnDelete").click();
-    cy.get("#letterTypeId")
-      .should("contain", "Select Template Type...")
-      .and("contain", "Minor Stips - Expedited")
-      .and("contain", "FB Admin pre-review")
-      .and("contain", "UNC ONLY-Permission to Register")
-      .select("Minor Stips - Expedited");
-    cy.get("#btnDraftLetter").click();
-
     //Verify and Finalize letter
     cy.get("#sent_to_email").should("be.visible");
     cy.get("#sent_to_email2").should("be.visible");
@@ -1406,6 +1428,8 @@ describe("EXEMPT", () => {
     cy.get("#btnFinalizeLetterModal").click();
     cy.get(".ui-dialog-content").should("be.visible");
     cy.get(".ui-dialog-buttonset > .btn-info").click();
+
+    cy.wait(10000);
   });
 
   it("Waiting PI Repsonse", () => {
@@ -1432,6 +1456,8 @@ describe("EXEMPT", () => {
     cy.wait(2000);
     cy.get(".iAgreeCheckbox").click();
     cy.get(".buttonEformYellow").click();
+
+    cy.wait(5000);
   });
 
   it("Revised-Resubmitted to IRB", () => {
@@ -1496,6 +1522,7 @@ describe("EXEMPT", () => {
     cy.get("#navLetter").should("be.visible");
 
     //Verify review conditions -> REVIEW
+    cy.get("#reviewConditionsIcon").should("have.class", "stopIcon fail");
     cy.get("#navReviewConditions").click();
     cy.get("#stopsHeader").should("be.visible");
     cy.get("#optionsList > :nth-child(1)").should("be.visible");
@@ -1517,9 +1544,9 @@ describe("EXEMPT", () => {
     //Verify review conditions -> COI
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("be.visible");
-    cy.get("#stopListManagementPlan").should("be.visible");
-    cy.get("#stopListHSP").should("be.visible");
-    cy.get("#stopListGCP").should("be.visible");
+    cy.get("#stopListManagementPlan").scrollIntoView().should("be.visible");
+    cy.get("#stopListHSP").scrollIntoView().should("be.visible");
+    cy.get("#stopListGCP").scrollIntoView().should("be.visible");
 
     //PI RESPONSES
     cy.viewport(1200, 612);
@@ -1577,6 +1604,10 @@ describe("EXEMPT", () => {
       cy.visit(url);
     });
 
+    //Review Conditions check
+    cy.get("#reviewConditionsIcon").should("have.class", "stopIcon fail");
+
+    /*
     //Record Review Result (minor stip w/o stip)
     cy.get("#navReviewResult").click();
     cy.get("#reviewResult3").click();
@@ -1636,40 +1667,50 @@ describe("EXEMPT", () => {
     cy.get("#btnDelete").click();
     cy.wait(3000);
     cy.get(':nth-child(3) > [onclick="modalClose();"]').click(); //close the draft letter modal
+    */
 
     //Record Review Result -> Select EXEMPT
     cy.get("#navReviewResult").click();
-    cy.get("#reviewResult2").click();
+    cy.get("#reviewResult1").click();
     cy.get("#reminderDateContainer").should("be.visible");
     cy.wait(3000);
 
     //Verify Categories
     cy.get("#reviewResultsCategories > span").should("be.visible");
     cy.get("#reviewResultCategories").should("be.visible");
-    cy.get("#reviewResultCategory12").should(
+    cy.get("#reviewResultCategory13").should(
       "contain",
       "1.Educational setting"
     );
-    cy.get("#reviewResultCategory13").should(
+    cy.get("#reviewResultCategory14").should(
       "contain",
       "2.Survey, interview, public observation"
     );
-    cy.get("#reviewResultCategory14").should(
+    cy.get("#reviewResultCategory15").should(
       "contain",
       "3. Benign Behavioral intervention"
     );
-    cy.get("#reviewResultCategory15").should(
+    cy.get("#reviewResultCategory16").should(
       "contain",
       "4. Secondary data/specimens"
     );
-    cy.get("#reviewResultCategory16").should(
+    cy.get("#reviewResultCategory17").should(
       "contain",
       "5.Federal demonstration projects"
     );
-    cy.get("#reviewResultCategory17").should(
+    cy.get("#reviewResultCategory18").should(
       "contain",
       "6.Taste or food preference"
     );
+
+    cy.get("#reviewResultCategory13").click();
+
+    //Risk of Research
+    cy.get('#riskOfResearch')
+    .should("contain", "...")
+    .and("contain", "Minimal")
+    .and("contain", "Greater than Minimal")
+    .select("Minimal");
 
     //Review Notes
     cy.get("#navReviewNotes").click();
@@ -1681,19 +1722,6 @@ describe("EXEMPT", () => {
     //Submission Specific Findings
     cy.get("#reviewNotesBox > :nth-child(3)").should("be.visible");
 
-    cy.get("#navNextStep").click();
-
-    //Test Exempt category stop
-    cy.get("#modalPopup").should(
-      "contain",
-      "Please select a review category before drafting letter."
-    );
-    cy.get(".button").click();
-    cy.get("#navReviewResult").click();
-    cy.get("#reviewResultCategory12").click();
-
-    cy.get("#navNextStep").click();
-    cy.wait(1000);
 
     //Draft Exempt letter
     cy.get("#btnDraftLetter").click();

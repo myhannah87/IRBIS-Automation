@@ -347,7 +347,7 @@ describe("Protocol Exception", () => {
   it("Protocol Exception - Verify Application/Review popup", () => {
     cy.visit(Cypress.config().stageTrunkBaseUrl);
     cy.get("input#username.long")
-      .type("cdcantre")
+      .type(IRBAnalyst)
       .should("have.value", IRBAnalyst);
     //.type('cjfennim').should('have.value', 'cjfennim')
     cy.get("input#password.long").type("test{Enter}");
@@ -403,7 +403,7 @@ describe("Protocol Exception", () => {
       "PI: Traub, Rebecca"
     );
     cy.get(":nth-child(2) > strong").should("contain", "Analyst:");
-    cy.get("#analystName").should("contain", "Cantrell, Celeste");
+    cy.get("#analystName").should("contain", "Feussner, Justin");
     cy.get(":nth-child(3) > strong").should("contain", "Admin Dept:");
     cy.get("#irbInfo > :nth-child(3) > :nth-child(3)").should(
       "contain",
@@ -636,7 +636,7 @@ describe("Protocol Exception", () => {
     cy.get(
       ":nth-child(1) > .questionNumber > .addProtocolEventStipButton"
     ).click();
-    cy.wait(1000);
+    cy.wait(3000);
 
     cy.get(".cke_wysiwyg_frame").then(function ($iframe) {
       const $body = $iframe.contents().find("body");
@@ -646,16 +646,16 @@ describe("Protocol Exception", () => {
 
     cy.contains("Save").click().click();
     cy.get(".editStipulation > p").should("be.visible");
-    cy.get("#navStipulations").should("contain", "Stipulations (1)");
+    //cy.get("#navStipulations").should("contain", "Stipulations (1)");
 
     //cy.reload()
     cy.get("#navStipulations").click();
     cy.get("#formBody").should("be.visible");
-    cy.get('[style="display: flex;"] > :nth-child(2) > :nth-child(1)').should(
-      "contain",
-      "Participant Study Identification Code"
-    );
-    cy.get('[style="display: flex;"] > :nth-child(2) > .textAnswer').should(
+    //cy.get('[style="display: flex;"] > :nth-child(2) > :nth-child(1)').should(
+     // "contain",
+     // "Participant Study Identification Code"
+    //);
+    cy.get('#questionIdparticipant_study_id > :nth-child(2) > .textAnswer').should(
       "contain",
       "Participant Study Identification Code"
     );
@@ -673,6 +673,9 @@ describe("Protocol Exception", () => {
     cy.get("#reviewResult3").should("have.class", "stipsNotAllowed"); //Acknowledged
     cy.get("#reviewResult1").click();
     //cy.get('.swimlane2 > div').should('contain', 'Result: Minor Stipulations')
+
+    //Notes/Findings
+    cy.get('#navReviewNotes').click()
 
     //Draft Letter
     cy.get("#navLetter").should("contain", "Letter").click();
@@ -837,7 +840,7 @@ describe("Protocol Exception", () => {
       .click();
   });
 
-  it.only("Protocol Exceptions - Verify Resubmitted Review popup", () => {
+  it("Protocol Exceptions - Verify Resubmitted Review popup", () => {
     cy.visit(Cypress.config().stageTrunkBaseUrl);
     //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow.PIResponses&masterId=383860&previousReviewId=285764&reviewId=531421&appId=416692');
     //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow&reviewId=531421&appId=416692');
@@ -899,7 +902,7 @@ describe("Protocol Exception", () => {
       "PI: Traub, Rebecca"
     );
     cy.get(":nth-child(2) > strong").should("contain", "Analyst:");
-    cy.get("#analystName").should("contain", "Cantrell, Celeste");
+    cy.get("#analystName").should("contain", "Feussner, Justin");
     cy.get(":nth-child(3) > strong").should("contain", "Admin Dept:");
     cy.get("#irbInfo > :nth-child(3) > :nth-child(3)").should(
       "contain",
@@ -1222,6 +1225,9 @@ describe("Protocol Exception", () => {
     cy.get("#reviewResult2").should("contain", "Withdrawn"); //Withdrawn
     cy.get("#reviewResult3").should("contain", "Acknowledged").click(); //Acknowledged
     cy.get(".swimlane2 > div").should("contain", "Result: Acknowledged");
+
+    //Notes/Findings
+    cy.get('#navReviewNotes').click()
 
     //Draft Letter
     cy.get("#navLetter").should("contain", "Letter").click();

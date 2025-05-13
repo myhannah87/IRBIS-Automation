@@ -331,7 +331,8 @@ describe("Committee Agenda/Minutes", () => {
     ).click();
     cy.get(":nth-child(3) > .notAttending > .day-content").should("be.visible");
 
-    cy.get(":nth-child(3) > .notAttending > .day-content").click();
+    //cy.get(":nth-child(3) > .notAttending > .day-content").click();
+    cy.get(':nth-child(12) > .month > tbody > :nth-child(3) > .notAttending > .day-content').click()
     cy.get("#fullDay").click();
     cy.get(
       '[aria-labelledby="ui-dialog-title-unavailableModal"] > .ui-dialog-buttonpane > .ui-dialog-buttonset > :nth-child(1)'

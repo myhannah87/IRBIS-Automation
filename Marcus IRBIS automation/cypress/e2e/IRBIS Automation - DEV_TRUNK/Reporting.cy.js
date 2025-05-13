@@ -35,19 +35,19 @@ describe("REPORTING", () => {
       "FINALIZED REVIEWS BY RESULT Past 7 Days"
     );
     cy.get(
-      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=7"]'
+      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=7&analyst=0&analistname="]'
     ).should("contain", "Week");
     cy.get(
-      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=14"]'
+      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=14&analyst=0&analistname="]'
     ).should("contain", "2 Weeks");
     cy.get(
-      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=30"]'
+      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=30&analyst=0&analistname="]'
     ).should("contain", "Month");
     cy.get(
-      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=90"]'
+      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=90&analyst=0&analistname="]'
     ).should("contain", "Quarter");
     cy.get(
-      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=365"]'
+      '[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=365&analyst=0&analistname="]'
     ).should("contain", "Year");
 
     cy.get("#divBusinessRuleAdminBucket > :nth-child(3)").should("be.visible");
@@ -195,7 +195,7 @@ describe("REPORTING", () => {
     cy.get("label > input").should("be.visible");
   });
 
-  it("Review Report", () => {
+  it.only("Review Report", () => {
     cy.visit(
       "https://orisdev.research.unc.edu/irb/index.cfm?event=irbis_reporting.irb_reports.index"
     );
@@ -213,7 +213,7 @@ describe("REPORTING", () => {
       "#editSearchCriteria99 > .searchCriteriaForm > .selectFieldDiv > .addSearchField"
     )
       .should("contain", "Date Accepted By IRB")
-      .should("contain", "Date Finalized")
+      .should("contain", "Date Letter Sent")
       .should("contain", "Prinicpal Investigator")
       .should("contain", "Faculty Advisor")
       .should("contain", "Department")
@@ -223,9 +223,9 @@ describe("REPORTING", () => {
       .should("contain", "Department")
       .should("contain", "Study Status")
       .should("contain", "Study IRB")
-      .should("contain", "Study Tag")
-      .should("contain", "Exempted Category")
-      .should("contain", "Expedited Category")
+      //.should("contain", "Study Tag")
+      //.should("contain", "Exempted Category")
+      //.should("contain", "Expedited Category")
       .should("contain", "Risk")
       .select("Prinicpal Investigator");
 

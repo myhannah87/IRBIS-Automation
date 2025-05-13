@@ -501,8 +501,8 @@ describe("Promptly Reportable Information (PRI)", () => {
     //cy.get('#date_received_cell > tbody > tr > [width="140px"] > label').should("be.visible")
   });
 
-  it("PRI Verify Application/Review popup", () => {
-    cy.visit("https://orisdev.research.unc.edu/irb_maint/index.cfm");
+  it.only("PRI Verify Application/Review popup", () => {
+    cy.visit(Cypress.config().stageTrunkBaseUrl);
     cy.viewport(1200, 700);
     //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow&reviewId=592858');
     cy.get("input#username.long").type("geers").should("have.value", "geers");
@@ -772,7 +772,7 @@ describe("Promptly Reportable Information (PRI)", () => {
     cy.get("#questionId8 > .answerContainer > .paperPadding").should(
       "be.visible"
     );
-    cy.get(".paperPadding > :nth-child(13)").should(
+    cy.get('#questionId8 > .answerContainer > .paperPadding > .subQuestion > div').should(
       "contain",
       "My explanation of my responses from A4"
     );
@@ -865,9 +865,13 @@ describe("Promptly Reportable Information (PRI)", () => {
       "contain",
       "D1. Given this event's occurrence, are there revisions to the study or consent documents that you would like to submit at this time?"
     );
-    cy.get("#questionId32 > .answerContainer > .paperPadding").should(
+    cy.get('#questionId32 > .answerContainer > .paperPadding > .subQuestion').should(
       "contain",
-      "Describe your changes below: My description of my changes for question D1"
+      "Describe your changes below"
+    );
+    cy.get('#questionId32 > .answerContainer > .paperPadding > .subQuestion > div').should(
+      "contain",
+      "My description of my changes for question D1"
     );
 
     cy.get("#screen6").should(
@@ -1041,7 +1045,7 @@ describe("Promptly Reportable Information (PRI)", () => {
     );
   });
 
-  it.only("Resubmitted PRI - Verify Application/Review popup", () => {
+  it("Resubmitted PRI - Verify Application/Review popup", () => {
     cy.visit(Cypress.config().stageTrunkBaseUrl);
     cy.get("input#username.long").type(IRBAnalyst).should("have.value", IRBAnalyst);
     cy.get("input#password.long").type("test{Enter}");

@@ -347,7 +347,7 @@ describe("Protocol Exception", () => {
   it("Protocol Exception - Verify Application/Review popup", () => {
     cy.visit(Cypress.config().devTrunkBaseUrl);
     cy.get("input#username.long")
-      .type("cdcantre")
+      .type(IRBAnalyst)
       .should("have.value", IRBAnalyst);
     //.type('cjfennim').should('have.value', 'cjfennim')
     cy.get("input#password.long").type("test{Enter}");
@@ -403,7 +403,7 @@ describe("Protocol Exception", () => {
       "PI: Traub, Rebecca"
     );
     cy.get(":nth-child(2) > strong").should("contain", "Analyst:");
-    cy.get("#analystName").should("contain", "Cantrell, Celeste");
+    cy.get("#analystName").should("contain", "Feussner, Justin");
     cy.get(":nth-child(3) > strong").should("contain", "Admin Dept:");
     cy.get("#irbInfo > :nth-child(3) > :nth-child(3)").should(
       "contain",
@@ -708,8 +708,6 @@ describe("Protocol Exception", () => {
 
   it("Protocol Exceptions - Waiting PI Response", () => {
     cy.visit(Cypress.config().devTrunkBaseUrl);
-
-    //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=home.protocolException&id=383860');
     cy.get("input#username.long")
       .type("mchopra")
       .should("have.value", ownerOnyen);
@@ -835,6 +833,8 @@ describe("Protocol Exception", () => {
     cy.get("#navResubmit > :nth-child(2)")
       .should("contain", "Resubmit")
       .click();
+
+    cy.wait(5000)  
   });
 
   it.only("Protocol Exceptions - Verify Resubmitted Review popup", () => {
@@ -899,7 +899,7 @@ describe("Protocol Exception", () => {
       "PI: Traub, Rebecca"
     );
     cy.get(":nth-child(2) > strong").should("contain", "Analyst:");
-    cy.get("#analystName").should("contain", "Cantrell, Celeste");
+    cy.get("#analystName").should("contain", "Feussner, Justin");
     cy.get(":nth-child(3) > strong").should("contain", "Admin Dept:");
     cy.get("#irbInfo > :nth-child(3) > :nth-child(3)").should(
       "contain",
@@ -1228,9 +1228,9 @@ describe("Protocol Exception", () => {
     cy.get(".ui-dialog").should("be.visible");
     cy.get("#letterTypeId")
       .should("contain", "Select Template Type...")
-      .and("contain", "Protocol Exception - Acknowledged")
+      .and("contain", "Protocol Exception - Approval")
       .and("contain", "Protocol Continuation - Approval")
-      .select("Protocol Exception - Acknowledged");
+      .select("Protocol Exception - Approval");
     cy.get(':nth-child(3) > [onclick="modalClose();"]').should(
       "contain",
       "Close"
@@ -1243,7 +1243,7 @@ describe("Protocol Exception", () => {
     cy.get(".cke_wysiwyg_frame").should("be.visible");
     cy.get(".letterSubHeader").should(
       "contain",
-      "Protocol Exception - Acknowledged"
+      "Protocol Exception - Approval"
     );
     cy.get("#btnViewPDF").should("contain", "View PDF");
     cy.get("#btnDelete").should("contain", "Delete");

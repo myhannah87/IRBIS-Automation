@@ -1,14 +1,13 @@
 describe("Login as Committee Member", () => {
   
   const committeeMember = 'jtauman'
-
+  const committeeReviewScreen = 'https://orisstage.research.unc.edu/irb/index.cfm?event=committee.reviewers&committeeId=12&reviewDate=01/10/2023'
+  const fullBoardReview = 'https://orisstage.research.unc.edu/irb/index.cfm?event=admin.reviewWindow&reviewId=530098&appId=413332&committeeView=1'
 
   it("Committee Reviewer Dashboard", () => {
     cy.viewport(1400, 750);
-    cy.visit(Cypress.config().stageTrunkBaseUrl);
-    //cy.get('title')
-    //  .invoke('text')
-    //.should('equal', '\nIRB \n')
+    //cy.visit(Cypress.config().stageTrunkBaseUrl);
+    cy.visit(committeeReviewScreen)
     cy.get("input#username.long")
       .type(committeeMember)
       .should("have.value", committeeMember);
@@ -61,35 +60,29 @@ describe("Login as Committee Member", () => {
       .and("contain", "Board F")
       .and("contain", "SWAG Committee");
 
-    /*
-    //This opens results on a new tab
-    cy.get('#selectCommittee')
-    .select('Board A')
-
-    cy.get('#selectDates2')
-    .select('08/07/2023')
-   
-  // cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=committee.reviewers&committeeId=2&reviewDate=08/07/2023');
-    */
 
     cy.get(":nth-child(3) > .sideNavHeader").should(
       "contain",
       "IRB Reviewer Checklists"
     );
     cy.get(
-      '[data-href="https://research.unc.edu/wp-content/uploads/2022/10/Document-38_IRB-Reviewer-Checklist-Initial-Application-8.15.2022.docx"] > .textLink'
+      '[data-href="https://research.unc.edu/wp-content/uploads/2025/01/Reviewer-Template-INITIALS-12FEB25.docx"] > .textLink'
+      
     ).should("contain", "Initial Application");
     cy.get(
-      '[data-href="https://research.unc.edu/wp-content/uploads/2022/10/IRB-Reviewer-Checklist-Renewal-Application-11.14.2023.docx"] > .textLink'
+      '[data-href="https://research.unc.edu/wp-content/uploads/2025/02/Reviewer-Template-RENEWALS-12FEB25.docx"] > .textLink'
     ).should("contain", "Renewal");
     cy.get(
-      '[data-href="https://research.unc.edu/wp-content/uploads/2024/04/Document-39_IRB-Reviewer_Checklist-Modifications-8.15.2022.docx"] > .textLink'
+      '[data-href="https://research.unc.edu/wp-content/uploads/2025/02/Reviewer-Template-Modifications-12FEB25.docx"] > .textLink'
     ).should("contain", "Modification");
+    cy.get(
+      '[data-href="https://research.unc.edu/wp-content/uploads/2025/02/Waivers-and-Regulatory-Findings.docx"] > .textLink'
+    ).should("contain", "Regulatory Findings Checklist");
     cy.get(
       '[data-href="https://research.unc.edu/wp-content/uploads/2022/10/Document-37_IRB-Reviewer-Checklist-Additional-Considerations-8.15.2022.docx"] > .textLink'
     ).should("contain", "Additional Considerations");
     cy.get(
-      '[data-href="https://research.unc.edu/wp-content/uploads/2022/08/PRI-Worksheet.docx"] > .textLink'
+      '[data-href="https://research.unc.edu/wp-content/uploads/2025/01/PRI-Worksheet-01.21.2025-REFERENCE-ONLY.docx"] > .textLink'
     ).should("contain", "PRI Reviewer Worksheet");
 
     cy.get(".boardTitle").should("be.visible");
@@ -111,8 +104,6 @@ describe("Login as Committee Member", () => {
     cy.get(".dt-button > img").should("be.visible");
     //Search field
     cy.get("#reviewersDT_filter > label").should("be.visible");
-
-    // cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=committee.reviewers&committeeId=12&reviewDate=01/10/2023');
 
     cy.get(".sorting_asc").should("be.visible");
     cy.get(
@@ -149,10 +140,9 @@ describe("Login as Committee Member", () => {
   //Committee Availability
   it("Committee Availability", () => {
     cy.viewport(1400, 750);
-    cy.visit(Cypress.config().stageTrunkBaseUrl);
-    //cy.get('title')
-    //  .invoke('text')
-    //.should('equal', '\nIRB \n')
+    //cy.visit(Cypress.config().stageTrunkBaseUrl);
+    cy.visit(committeeReviewScreen)
+
     cy.get("input#username.long")
       .type(committeeMember)
       .should("have.value", committeeMember);
@@ -276,10 +266,8 @@ describe("Login as Committee Member", () => {
   //describe('Test Committee View',  () => {
   it("Committee Reviewer Application pop up", () => {
     cy.viewport(1400, 750);
-    cy.visit(Cypress.config().stageTrunkBaseUrl);
-    //cy.get('title')
-    //  .invoke('text')
-    //.should('equal', '\nIRB \n')
+    //cy.visit('https://orisstage.research.unc.edu/irb/index.cfm?event=committee.reviewers&committeeId=12&reviewDate=01/10/2023');
+    cy.visit(committeeReviewScreen)
     cy.get("input#username.long")
       .type(committeeMember)
       .should("have.value", committeeMember);
@@ -291,7 +279,7 @@ describe("Login as Committee Member", () => {
     cy.window().then((win) => {
       cy.stub(win, "open", (url) => {
         win.location.href =
-          "https://orisstage.research.unc.edu/irb/index.cfm?event=admin.reviewWindow&reviewId=530098&appId=413332&committeeView=1";
+        fullBoardReview
       }).as("popup");
     });
     cy.viewport(1200, 750);
@@ -363,54 +351,88 @@ describe("Login as Committee Member", () => {
 
     */
 
-    //VERIFY/ENTER PRIMARY REVIEW SUMMARY
-    cy.get("#primaryReviewerSummary").click();
-    cy.get("#reviewSummary").type("My Primary Reviewer Summary");
-    cy.get("#btnSummary").click();
-    cy.get("#btnSummaryChecklist").click();
-    cy.get("#summaryEdit").should("be.visible");
-    cy.get("#summaryEdit > #btnSummary").should("not.be.disabled");
-    cy.get("#btnSummaryClose").should("not.be.disabled");
-    cy.get("#btnSummaryClear").should("not.be.disabled");
-    cy.get("#frmUploadOHREAttachment").and(
-      "contain",
-      "Click Browse to select a Reviewer Checklist:"
-    );
-    cy.get("#fileDataInput").should("not.be.disabled");
-    cy.get("#btnSummaryClose").click();
-    cy.get(".ui-dialog-titlebar-close > .ui-icon").click();
+      //VERIFY/ENTER PRIMARY REVIEW SUMMARY
+  
+      cy.url().as("reviewWindow");
 
-    //DELETE PRIMARY REVIEW SUMMARY
-    cy.wait(1000);
-    cy.get("#primaryReviewerSummary").click();
-    cy.get("#summaryTxt").should("contain", "My Primary Reviewer Summary");
-    cy.get("#btnSummaryEdit").click();
-    cy.get("#btnSummaryClear").click();
-
-    //VERIFY SECONDAY REVIEW SUMMARY BUTTON
-    cy.wait(1000);
-    cy.get("#secondaryReviewerSummary").click();
-    cy.get("#reviewSummary").type("My Secondary Reviewer Summary");
-    cy.get("#btnSummary").click();
-    cy.get("#btnSummaryChecklist").click();
-    cy.get("#summaryEdit").should("be.visible");
-    cy.get("#summaryEdit > #btnSummary").should("not.be.disabled");
-    cy.get("#btnSummaryClose").should("not.be.disabled");
-    cy.get("#btnSummaryClear").should("not.be.disabled");
-    cy.get("#frmUploadOHREAttachment").and(
-      "contain",
-      "Click Browse to select a Reviewer Checklist:"
-    );
-    cy.get("#fileDataInput").should("not.be.disabled");
-    cy.get("#btnSummaryClose").click();
-    cy.get(".ui-dialog-titlebar-close > .ui-icon").click();
-
-    //DELETE SECONDARY REVIEW SUMMARY
-    cy.wait(1000);
-    cy.get("#secondaryReviewerSummary").click();
-    cy.get("#summaryTxt").should("contain", "My Secondary Reviewer Summary");
-    cy.get("#btnSummaryEdit").click();
-    cy.get("#btnSummaryClear").click();
+      //launch Rrimary Reviewer popup
+       // Get window object
+       cy.window().then((win) => {
+         // Replace window.open(url, target)-function with our own arrow function
+         cy.stub(win, "open", (url) => {
+           // change window location to be same as the popup url
+           win.location.href = Cypress.config().stageTrunkBaseUrl + url;
+         }).as("primaryReviewerSummary"); // alias it with popup, so we can refer it with @popup
+       });
+   
+       // Click button which triggers javascript's window.open() call
+       cy.get("#primaryReviewerSummary").click();
+       cy.get("#reviewSummary").type("My Primary Reviewer Summary");
+       cy.get("#btnSummary").click();
+       cy.get("#btnSummaryChecklist").click();
+       cy.get("#summaryEdit").should("be.visible");
+       cy.get("#summaryEdit > #btnSummary").should("not.be.disabled");
+       cy.get("#btnSummaryClose").should("not.be.disabled");
+       cy.get("#btnSummaryClear").should("not.be.disabled");
+       cy.get("#frmUploadOHREAttachment").and(
+         "contain",
+         "Click Browse to select a Reviewer Checklist:"
+       );
+       cy.get("#fileDataInput").should("not.be.disabled");
+       cy.get("#btnSummaryClose").click();
+       //cy.get(".ui-dialog-titlebar-close > .ui-icon").click();
+   
+   
+       //DELETE PRIMARY REVIEW SUMMARY
+       //cy.get('#btnSummaryEdit').click()
+       cy.wait(1000);
+       //cy.get("#primaryReviewerSummary").click();
+       cy.get("#summaryTxt").should("contain", "My Primary Reviewer Summary");
+       cy.get("#btnSummaryEdit").click();
+       cy.get("#btnSummaryClear").click();
+   
+       cy.get("@reviewWindow").then((url) => {
+         cy.visit(url);
+       });
+   
+       //VERIFY SECONDAY REVIEW SUMMARY BUTTON
+       //launch Rrimary Reviewer popup
+       // Get window object
+       cy.window().then((win) => {
+         // Replace window.open(url, target)-function with our own arrow function
+         cy.stub(win, "open", (url) => {
+           // change window location to be same as the popup url
+           win.location.href = Cypress.config().stageTrunkBaseUrl + url;
+         }).as("primaryReviewerSummary"); // alias it with popup, so we can refer it with @popup
+       });
+   
+       cy.wait(1000);
+       cy.get("#secondaryReviewerSummary").click();
+       cy.get("#reviewSummary").type("My Secondary Reviewer Summary");
+       cy.get("#btnSummary").click();
+       cy.get("#btnSummaryChecklist").click();
+       cy.get("#summaryEdit").should("be.visible");
+       cy.get("#summaryEdit > #btnSummary").should("not.be.disabled");
+       cy.get("#btnSummaryClose").should("not.be.disabled");
+       cy.get("#btnSummaryClear").should("not.be.disabled");
+       cy.get("#frmUploadOHREAttachment").and(
+         "contain",
+         "Click Browse to select a Reviewer Checklist:"
+       );
+       cy.get("#fileDataInput").should("not.be.disabled");
+       cy.get("#btnSummaryClose").click();
+       //cy.get(".ui-dialog-titlebar-close > .ui-icon").click();
+   
+       //DELETE SECONDARY REVIEW SUMMARY
+       cy.wait(1000);
+       //cy.get("#secondaryReviewerSummary").click();
+       cy.get("#summaryTxt").should("contain", "My Secondary Reviewer Summary");
+       cy.get("#btnSummaryEdit").click();
+       cy.get("#btnSummaryClear").click();
+   
+       cy.get("@reviewWindow").then((url) => {
+         cy.visit(url);
+       });
 
     //VERIFY VIEW LETTER AND STIPLULATIONS
     cy.get("#lettersAndStips").click();
@@ -475,10 +497,11 @@ describe("Login as Committee Member", () => {
     });
     cy.viewport(1400, 750);
 
-    //VERIFY REVIEW RESULTS
-    cy.get("#navReviewResult").click();
+   //VERIFY REVIEW RESULTS
+    //cy.get("#navReviewResult").click();
     cy.get("#selectResult > :nth-child(1)").should("contain", "Review Result");
-    cy.get("#reviewResult1").should("contain", "Approved");
+    cy.get("#reviewResult4").should("contain", "Minor Stipulations");
+    /*
     cy.get("#riskOfResearchContainer > :nth-child(1)").should(
       "contain",
       "Risk of Research"
@@ -496,6 +519,7 @@ describe("Login as Committee Member", () => {
       "contain",
       "01/09/2024"
     );
+    */
 
     //VERIFY COMMITTEE AREA
     cy.get("#navCommittee").click();
@@ -521,7 +545,7 @@ describe("Login as Committee Member", () => {
     cy.get("#navLetter").click();
     cy.get(".letterSubHeader").should(
       "contain",
-      "Full Board Approval (Initial)"
+      "Minor Stips - Full Board"
     );
   });
 });

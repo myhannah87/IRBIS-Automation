@@ -1,7 +1,8 @@
 describe("Promptly Reportable Information (PRI)", () => {
 
   const logIn =
-  "https://orisdev.research.unc.edu/irb_maint/index.cfm?event=home.dashboard.irbstudymanagement&irb_id=06-0006";
+  //"https://orisdev.research.unc.edu/irb_maint/index.cfm?event=home.dashboard.irbstudymanagement&irb_id=06-0006";
+  "https://orisdev.research.unc.edu/irb_cb7_ph2/index.cfm?event=home.dashboard.irbstudymanagement&irb_id=06-0006";
 
   const submissionOwner = "mhannah1";
   const PI = "maceo";
@@ -502,7 +503,7 @@ describe("Promptly Reportable Information (PRI)", () => {
   });
 
   it("PRI Verify Application/Review popup", () => {
-    cy.visit("https://orisdev.research.unc.edu/irb_maint/index.cfm");
+    cy.visit(Cypress.config().devMaintBaseUrl);
     cy.viewport(1200, 700);
     //cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow&reviewId=592858');
     cy.get("input#username.long").type("geers").should("have.value", "geers");
@@ -772,7 +773,7 @@ describe("Promptly Reportable Information (PRI)", () => {
     cy.get("#questionId8 > .answerContainer > .paperPadding").should(
       "be.visible"
     );
-    cy.get(".paperPadding > :nth-child(13)").should(
+    cy.get('#questionId8 > .answerContainer > .paperPadding > .subQuestion > div').should(
       "contain",
       "My explanation of my responses from A4"
     );
@@ -865,11 +866,16 @@ describe("Promptly Reportable Information (PRI)", () => {
       "contain",
       "D1. Given this event's occurrence, are there revisions to the study or consent documents that you would like to submit at this time?"
     );
-    cy.get("#questionId32 > .answerContainer > .paperPadding").should(
+   
+    cy.get('#questionId32 > .answerContainer > .paperPadding > .subQuestion').should(
       "contain",
-      "Describe your changes below: My description of my changes for question D1"
+      "Describe your changes below"
     );
-
+    cy.get('#questionId32 > .answerContainer > .paperPadding > .subQuestion > div').should(
+      "contain",
+      "My description of my changes for question D1"
+    );
+    
     cy.get("#screen6").should(
       "contain",
       "Root Cause Analysis and Corrective and Preventative Action (CAPA) Plan"
@@ -912,6 +918,7 @@ describe("Promptly Reportable Information (PRI)", () => {
       "contain",
       "Stipulation: by Eric Geers on"
     );
+    cy.wait(3000);
     cy.get(".cke_wysiwyg_frame").then(function ($iframe) {
       const $body = $iframe.contents().find("body");
       console.log($body);
@@ -1041,7 +1048,7 @@ describe("Promptly Reportable Information (PRI)", () => {
     );
   });
 
-  it.only("Resubmitted PRI - Verify Application/Review popup", () => {
+  it("Resubmitted PRI - Verify Application/Review popup", () => {
     cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long").type(IRBAnalyst).should("have.value", IRBAnalyst);
     cy.get("input#password.long").type("test{Enter}");

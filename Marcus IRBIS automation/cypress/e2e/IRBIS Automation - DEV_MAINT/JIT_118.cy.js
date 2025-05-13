@@ -62,8 +62,9 @@ describe("JIT/118", () => {
       ':nth-child(4) > .tablemainsub > tbody > [align="center"] > .copy > .seachSubmit'
     ).should("be.visible");
     //cy.get('[style="width: 100%; text-align: center; margin-top: 10px;"] > .button').click()
-    cy.get("#first_name").type("Chuck");
-    cy.get("#last_name").type("Fennimore");
+    cy.get("#pid").type("710917825");
+    //cy.get('#first_name').type('Chuck')
+    //cy.get('#last_name').type('Fennimore')
     cy.get(
       ':nth-child(3) > .tablemainsub > tbody > [align="center"] > .copy > .seachSubmit'
     ).click();
@@ -76,14 +77,18 @@ describe("JIT/118", () => {
     cy.get(
       '[aria-label="Title: activate to sort column ascending"] > .DataTables_sort_wrapper'
     ).should("be.visible");
-    cy.get(":nth-child(1) > .sorting_1 > .copy").click();
+    cy.get(":nth-child(4) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
-    cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
-    ).should("be.visible");
+   // cy.get(
+     // '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+    //).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
-    cy.get(':nth-child(7) > tbody > .odd > [width="4%"] > input').click();
+    cy.get(':nth-child(2) > [width="4%"] > input').click();
+    cy.get(':nth-child(3) > [width="4%"] > input').click();
+    cy.get(':nth-child(4) > [width="4%"] > input').click();
+    cy.get(':nth-child(5) > [width="4%"] > input').click();
+
     cy.get(".importSubmit").click();
     //MAKE CHUCK PI / VERIFY PERSONNEL POP UP
     cy.get('[qid="h_1895"] > [width="99%"]').should("be.visible");

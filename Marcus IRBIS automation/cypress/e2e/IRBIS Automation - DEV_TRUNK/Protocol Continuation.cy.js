@@ -181,6 +181,8 @@ describe("Protocol Continuation", () => {
 
     cy.get("#btnSave").should("be.visible");
     cy.get("#btnSubmit").should("be.visible").click();
+
+    cy.wait(5000)
   });
 
   //PROTOCOL CONTINUATION: PI CERT
@@ -194,6 +196,8 @@ describe("Protocol Continuation", () => {
     cy.get(".sorting_1 > a").click();
 
     cy.get("#navPICert > :nth-child(2)").click();
+
+    cy.wait(5000)
   });
 
   //PROTOCOL CONTINUATION - STUDY HISTORY SCREEN/SUBMISSION DETAILS
@@ -334,7 +338,7 @@ describe("Protocol Continuation", () => {
       "PI: Maddox, Brenna"
     );
     cy.get(":nth-child(2) > strong").should("contain", "Analyst:");
-    cy.get("#analystName").should("contain", "Cantrell, Celeste");
+    cy.get("#analystName").should("contain", "Feussner, Justin");
     cy.get(":nth-child(3) > strong").should("contain", "Admin Dept:");
     cy.get("#irbInfo > :nth-child(3) > :nth-child(3)").should(
       "contain",
@@ -477,6 +481,8 @@ describe("Protocol Continuation", () => {
       .click();
     cy.get(".ui-dialog-content").should("be.visible");
     cy.get(".ui-dialog-buttonset > .btn-info").click();
+
+    cy.wait(5000);
   });
 
   it("Protocol Continuation - Waiting PI Response", () => {
@@ -630,6 +636,8 @@ describe("Protocol Continuation", () => {
       .should("contain", "Resubmit")
       .click();
 
+    cy.wait(5000)  
+
     /*
   cy.get('iframe').then(function($iframe) {
   const $body = $iframe.contents().find("body");
@@ -640,7 +648,7 @@ describe("Protocol Continuation", () => {
     //cy.get('.save').click()
     // cy.reload()
 
-    // cy.wait(2000)
+    
 
     //RESBUMIT ADMINISTRATIVE REVIEW
     //  cy.get('#navResubmit > :nth-child(2)').click()
@@ -705,7 +713,7 @@ describe("Protocol Continuation", () => {
       "PI: Maddox, Brenna"
     );
     cy.get(":nth-child(2) > strong").should("contain", "Analyst:");
-    cy.get("#analystName").should("contain", "Cantrell, Celeste");
+    cy.get("#analystName").should("contain", "Feussner, Justin");
     cy.get(":nth-child(3) > strong").should("contain", "Admin Dept:");
     cy.get("#irbInfo > :nth-child(3) > :nth-child(3)").should(
       "contain",
@@ -939,7 +947,7 @@ describe("Protocol Continuation", () => {
     cy.get(".ui-dialog").should("be.visible");
     cy.get("#letterTypeId")
       .should("contain", "Select Template Type...")
-      .and("contain", "Protocol Exception - Acknowledged")
+      .and("contain", "Protocol Exception - Approval")
       .and("contain", "Protocol Continuation - Approval")
       .select("Protocol Continuation - Approval");
     cy.get(':nth-child(3) > [onclick="modalClose();"]').should(
@@ -955,7 +963,7 @@ describe("Protocol Continuation", () => {
     cy.get(".cke_wysiwyg_frame").should("be.visible");
     cy.get(".letterSubHeader").should(
       "contain",
-      "Protocol Exception - Acknowledged"
+      "Protocol Exception - Approval"
     );
     cy.get("#btnViewPDF").should("contain", "View PDF");
     cy.get("#btnDelete").should("contain", "Delete");

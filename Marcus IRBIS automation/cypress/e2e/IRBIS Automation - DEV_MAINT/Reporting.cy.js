@@ -1,7 +1,7 @@
  
   describe('REPORTING',  () => {
      it('Verify Reporting landing screen', () => {
-        cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=irbis_reporting.irb_reports.index');
+        cy.visit(Cypress.config().devMaintBaseUrl);
        
         cy.get('input#username.long')
             .type('cdcantre').should('have.value', 'cdcantre')  
@@ -40,7 +40,7 @@
         })
 
 it('Study Report', () => {
-        cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=irbis_reporting.irb_reports.index');
+        cy.visit(Cypress.config().devMaintBaseUrl);
        
         cy.get('input#username.long')
             .type('cdcantre').should('have.value', 'cdcantre')  
@@ -95,8 +95,7 @@ it('Study Report', () => {
          })
 
 it('Submission Report', () => {
-        cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=irbis_reporting.irb_reports.index');
-       // cy.visit('https://orisdev.research.unc.edu/irb/index.cfm?event=irbis_reporting.irb_reports.index');
+        cy.visit(Cypress.config().devMaintBaseUrl);
 
         cy.get('input#username.long')
                 .type('cdcantre').should('have.value', 'cdcantre')  
@@ -146,7 +145,7 @@ it('Submission Report', () => {
        }) 
 
 it('Review Report', () => {
-        cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=irbis_reporting.irb_reports.index');
+        cy.visit(Cypress.config().devMaintBaseUrl);
 
         cy.get('input#username.long')
                 .type('cdcantre').should('have.value', 'cdcantre')  

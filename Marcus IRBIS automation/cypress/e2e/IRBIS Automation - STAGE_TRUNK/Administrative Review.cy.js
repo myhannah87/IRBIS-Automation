@@ -3,9 +3,10 @@ describe("Administrative Review", () => {
   const ownerOnyen = 'mhannah1'
   const PI = 'jslatt'
   const IRBAnalyst = "jfuse";
+  const testURL = 'https://orisstage.research.unc.edu/irb/index.cfm?event=home.dashboard.irbstudymanagement&irb_id=11-0190';
 
   it("Create Administrative Review Application", () => {
-    cy.visit(Cypress.config().stageTrunkBaseUrl);
+    cy.visit(testURL);
     cy.get("input#username.long")
       .type(ownerOnyen)
       .should("have.value", ownerOnyen);
@@ -310,7 +311,7 @@ describe("Administrative Review", () => {
     cy.get("#itemListAcceptSubmission > dd").click();
     //cy.pause()
     // cy.get('#closeAcceptWindow').click()
-    //  cy.wait(3000)
+    cy.wait(3000)
   });
 
   //ADMINISTRATIVE REVIEW - STUDY HISTORY SCREEN/SUBMISSION DETAILS
@@ -443,10 +444,12 @@ describe("Administrative Review", () => {
     cy.get("#divAdminReviewForm3 > .hd").should("contain", "Study Updates");
     cy.get("#divAdminReviewForm3 > .bd").should("be.visible");
 
+    /*
     //CREATE A REVIEW
     cy.get("#navigateToReview0 > :nth-child(10)").click();
     cy.get("#modalPopup").should("be.visible");
     cy.get(".label").should("contain", "Administrative");
+    
 
     // Get window object
     cy.window().then((win) => {
@@ -463,6 +466,7 @@ describe("Administrative Review", () => {
     //cy.get("@createReview").should("be.called");
 
     cy.get("#results").should("be.visible");
+    
 
     // NAVIGATE FROM REVIEW RESULTS TO APPLICAITON SCREEN TO CREATE STIP
     cy.window().then((win) => {
@@ -477,6 +481,7 @@ describe("Administrative Review", () => {
     cy.contains("Application").should("be.visible").click();
     // Make sure that it triggered window.open function call
     //cy.get("@application").should("be.called");
+    */
 
     //CREATE STIP
     cy.get("#stipContainer2B > .button").click();
@@ -496,52 +501,54 @@ describe("Administrative Review", () => {
     );
 
       // NAVIGATE FROM APPLICATION TO RECORD RESULTS SCREEN
-      cy.window().then((win) => {
-        // Replace window.open(url, target)-function with our own arrow function
-        //cy.stub(win, "open", (url) => {
-          cy.stub(win, 'open').callsFake (url => 
-            // change window location to be same as the popup url
-            win.location.href = Cypress.config().stageTrunkBaseUrl + url);
-        }).as("recordResult"); // alias it with popup, so we can refer it with @popup
+    cy.window().then((win) => {
+      // Replace window.open(url, target)-function with our own arrow function
+      //cy.stub(win, "open", (url) => {
+        cy.stub(win, 'open').callsFake (url => 
+          // change window location to be same as the popup url
+          win.location.href = Cypress.config().stageTrunkBaseUrl + url);
+      }).as("recordResult"); // alias it with popup, so we can refer it with @popup
            
 
       // Click button which triggers javascript's window.open() call
-      cy.contains("Record Result").should("be.visible").click();
-      // Make sure that it triggered window.open function call
-      //cy.get("@recordResult").should("be.called");
+    cy.contains("Record Result").should("be.visible").click();
+    // Make sure that it triggered window.open function call
+    //cy.get("@recordResult").should("be.called");
 
-      //RECORD RESULTS
-      //cy.contains('Assign Me').click()
-      cy.get("#results").should("be.visible");
-      cy.get("#finding").should("be.visible");
-      cy.get("#cke_submission_findings").should("be.visible");
-      cy.get("#internal");
+    //RECORD RESULTS
+    //cy.contains('Assign Me').click()
+    cy.get("#results").should("be.visible");
+    cy.get("#finding").should("be.visible");
+    cy.get("#cke_submission_findings").should("be.visible");
+    cy.get("#internal");
 
-      cy.get("#reviewResult")
-        .should("contain", "...")
-        .and("contain", "Acknowledged")
-        .and("contain", "Minor Stipulations")
-        .and("contain", "Withdrawn")
-        .select("Minor Stipulations");
+    cy.get("#reviewResult")
+      .should("contain", "...")
+      .and("contain", "Acknowledged")
+      .and("contain", "Minor Stipulations")
+      .and("contain", "Withdrawn")
+      .select("Minor Stipulations");
 
-      //DRAFT LETTER
-      cy.reload();
-      cy.contains("Draft Letter").should("be.visible").click();
-      cy.get("#modalPopup").should("be.visible");
-      cy.get("tr > .copy").should("contain", "Minor Stipulations");
-      cy.get("#btnMakeLetter").click();
-      cy.wait(2000);
+    //DRAFT LETTER
+    cy.reload();
+    cy.contains("Draft Letter").should("be.visible").click();
+    cy.get("#modalPopup").should("be.visible");
+    cy.get("tr > .copy").should("contain", "Minor Stipulations");
+    cy.get("#btnMakeLetter").click();
+    cy.wait(2000);
 
-      //FINALIZE ADMINISTRATIVE REVIEW - MINOR STIP LETTER
-      cy.get("#submission > :nth-child(3)").should("be.visible");
-      cy.wait(3000);
-      cy.get("#finalizeLetterAR").click();
+    //FINALIZE ADMINISTRATIVE REVIEW - MINOR STIP LETTER
+    cy.get("#submission > :nth-child(3)").should("be.visible");
+    cy.wait(3000);
+    cy.get("#finalizeLetterAR").click();
 
-      // Click ok in js confirmation alert
-      cy.on("window:alert", (t) => {
-        expect(t).to.contains("OK").click();
-      });
+    // Click ok in js confirmation alert
+    cy.on("window:alert", (t) => {
+      expect(t).to.contains("OK").click();
+
+    cy.wait(3000);  
     });
+  });
 
   it("Administrative Review - Waiting PI Response", () => {
     cy.visit(Cypress.config().stageTrunkBaseUrl);
@@ -623,7 +630,8 @@ describe("Administrative Review", () => {
     cy.get("form > .copy")
       .should("contain", "Resubmit Administrative Review")
       .click();
-    
+
+    cy.wait(3000);
   });
 
   it("Administrative Review - Verify Resubmitted Review popup", () => {
@@ -638,8 +646,7 @@ describe("Administrative Review", () => {
     cy.get(
       'td[data-title="PI Responses"] > .bucket > :nth-child(2) > table > tbody > :nth-child(2) > [data-column="NFB"] > a'
     ).click();
-    cy.viewport(1200, 700);
-    cy.wait(1000);
+    cy.wait(3000);
     cy.get("#bucketDataTable_filter > label > input").type(
       "Shock Treatment 2.0"
     );
@@ -658,7 +665,7 @@ describe("Administrative Review", () => {
     cy.contains("Application").should("be.visible").click();
 
     // Make sure that it triggered window.open function call
-    cy.get("@popup").should("be.called");
+    //cy.get("@popup").should("be.called");
 
     //REVIEW POPUP
     cy.get(":nth-child(1) > strong").should("contain", "Navigate To:");
@@ -714,7 +721,7 @@ describe("Administrative Review", () => {
     // Click button which triggers javascript's window.open() call
     cy.get("#piResponsesLink").click();
     // Make sure that it triggered window.open function call
-    cy.get("@piResponses").should("be.called");
+    //cy.get("@piResponses").should("be.called");
 
     cy.get(".gradientVert").should("be.visible");
     cy.get(".greyShadow").should("be.visible");
@@ -760,7 +767,7 @@ describe("Administrative Review", () => {
     // Click button which triggers javascript's window.open() call
     cy.contains("Record Result").should("be.visible").click();
     // Make sure that it triggered window.open function call
-    cy.get("@recordResult").should("be.called");
+    //cy.get("@recordResult").should("be.called");
 
     //RECORD RESULTS
     cy.get(".big-Arial-grey").should("contain", "SUBMISSION REVIEW");

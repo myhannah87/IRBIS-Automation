@@ -1,10 +1,10 @@
 describe("Protocol Continuation", () => {
   const ownerOnyen = "savlynch";
-  const PI = "maddoxb";
+  const PI = "roubinov";
   const IRBAnalyst = "jfuse";
   const IRBNumber = "21-2110";
 
-  it.only("Create Protocol Continuation", () => {
+  it("Create Protocol Continuation", () => {
     cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long")
       .type(ownerOnyen)
@@ -185,7 +185,7 @@ describe("Protocol Continuation", () => {
 
   //PROTOCOL CONTINUATION: PI CERT
   it("Protocol Continuation - Being Routed", () => {
-    cy.visit(devMaintBaseUCypress.config().devMaintBaseUrl);
+    cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long").type(PI).should("have.value", PI);
     cy.get("input#password.long").type("test{Enter}");
 
@@ -197,7 +197,7 @@ describe("Protocol Continuation", () => {
   });
 
   //PROTOCOL CONTINUATION - STUDY HISTORY SCREEN/SUBMISSION DETAILS
-  it("Protocol Continuation - Verify Study History/Submission Details", () => {
+  it.only("Protocol Continuation - Verify Study History/Submission Details", () => {
     cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long")
       .type(IRBAnalyst)
@@ -206,7 +206,7 @@ describe("Protocol Continuation", () => {
 
     cy.viewport(1200, 700);
     cy.get(
-      'td[data-title="Accepted By IRB"] > .bucket > :nth-child(2) > table > tbody > :nth-child(10) > .countTotal > a'
+      'td[data-title="Accepted By IRB"] > .bucket > :nth-child(2) > table > tbody > :nth-child(2) > [data-column="TBD"] > a'
     ).click();
     cy.wait(1000);
     cy.get("#bucketDataTable_filter > label > input").type(
@@ -657,7 +657,7 @@ describe("Protocol Continuation", () => {
     cy.viewport(1200, 700);
 
     cy.get(
-      'td[data-title="PI Responses"] > .bucket > :nth-child(2) > table > tbody > :nth-child(2) > [data-column="NFB"] > a'
+      'td[data-title="PI Responses"] > .bucket > :nth-child(2) > table > tbody > :nth-child(2) > [data-column="TBD"] > a'
     ).click();
     cy.wait(1000);
     cy.get("#bucketDataTable_filter > label > input").type(

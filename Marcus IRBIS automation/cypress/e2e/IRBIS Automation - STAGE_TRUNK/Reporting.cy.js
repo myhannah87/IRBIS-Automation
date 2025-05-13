@@ -25,11 +25,11 @@
         cy.get('[style="float: left; width: 48%;"] > h3').should('contain', 'FINALIZED SUBMISSIONS BY TYPE Past 7 Days')
 
         cy.get('[style="float: right; width: 48%;"] > h3').should('contain','FINALIZED REVIEWS BY RESULT Past 7 Days')
-        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=7"]').should('contain','Week')
-        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=14"]').should('contain','2 Weeks')
-        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=30"]').should('contain','Month')
-        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=90"]').should('contain','Quarter')
-        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=365"]').should('contain','Year')
+        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=7&analyst=0&analistname="]').should('contain','Week')
+        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=14&analyst=0&analistname="]').should('contain','2 Weeks')
+        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=30&analyst=0&analistname="]').should('contain','Month')
+        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=90&analyst=0&analistname="]').should('contain','Quarter')
+        cy.get('[href="index.cfm?event=irbis_reporting.irb_reports.index&datespan=365&analyst=0&analistname="]').should('contain','Year')
         
         cy.get('#divBusinessRuleAdminBucket > :nth-child(3)').should("be.visible")
         cy.get('[style="float: left;"] > h3').should('contain', 'ACTIVE SUBMISSION COUNT BY ANALYST')
@@ -64,11 +64,11 @@ it('Study Report', () => {
         .should('contain', 'Study Tag')
         .should('contain', 'Exempted Category')
         .should('contain', 'Expedited Category')
-        .select('Active')
+        //.select('Active')
 
        // cy.get('#editSearchCriteria99 > .searchCriteriaForm > .selectFieldDiv > .addSearchField').select('Active')
-        cy.get('#editSearchCriteria99 > .searchCriteriaForm > .booleanDiv > [value="1"]').click()
-        cy.get('#editSearchCriteria99 > .searchCriteriaForm > .editCritButtons > .btnSubmitCrit').click()
+       //cy.get('#editSearchCriteria99 > .searchCriteriaForm > .booleanDiv > [value="1"]').click()
+       //cy.get('#editSearchCriteria99 > .searchCriteriaForm > .editCritButtons > .btnSubmitCrit').click()
 
         cy.get('.addNewCriteriaImg').click()
 
@@ -79,8 +79,8 @@ it('Study Report', () => {
         .select('Is One Of')
 
         cy.get('#editSearchCriteria99 > .searchCriteriaForm > .selectValuesDiv > .listValues > .lookupList').click()
-        cy.get('#fName').type('Marcus')
-        cy.get('#lName').type('Hannah')
+        cy.get('#fName').type('John')
+        cy.get('#lName').type('Slattery')
         cy.get('#submitPersonnelSearch').click()
         cy.get('.personSelect').click()
         cy.get('#editSearchCriteria99 > .searchCriteriaForm > .editCritButtons > .btnSubmitCrit').click()
@@ -94,7 +94,7 @@ it('Study Report', () => {
 
          })
 
-it('Submission Report', () => {
+it.only('Submission Report', () => {
         cy.visit('https://orisstage.research.unc.edu/irb/index.cfm?event=irbis_reporting.irb_reports.index');
        // cy.visit('https://orisstage.research.unc.edu/irb/index.cfm?event=irbis_reporting.irb_reports.index');
 

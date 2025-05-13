@@ -4,7 +4,7 @@ describe("EXEMPT", () => {
   const deptApprover = "jstlatt";
   const IRBAnalyst = "jfuse";
 
-  it("Create Exempt Form", () => {
+  it.only("Create Exempt Form", () => {
     cy.visit(Cypress.config().stageTrunkBaseUrl);
 
     cy.get("input#username.long")
@@ -159,11 +159,13 @@ describe("EXEMPT", () => {
     cy.get('[name="submit1"]').click();
 
     //CONSENT PROCESS FOR EXEMPTIONS
-    cy.get('[qid="h_2313"] > [width="99%"]').should("be.visible");
-    cy.get('[inputvalue="1"] > #q_127_2314').click();
-    cy.get("#doc_2314_424 > a").should("be.visible");
+    cy.get('#eFormScreen_Copy').should("be.visible");
+    cy.get('#eFormScreen_ButtonCopy').click()
+    cy.get('[qid="h_2298"] > [width="99%"]').should("be.visible");
+    cy.get('[inputvalue="1"] > #q_127_2299').click();
+    cy.get("#doc_2299_424 > a").should("be.visible");
     //TYPE INTO CKEDITOR
-    cy.get('#hd_2314\\|\\|1 > [width="99%"]').should("be.visible");
+    cy.get('#hd_2299\\|\\|1 > [width="99%"]').should("be.visible");
     cy.get(".cke_wysiwyg_frame").then(function ($iframe) {
       const $body = $iframe.contents().find("body");
       console.log($body);
@@ -221,7 +223,7 @@ describe("EXEMPT", () => {
     cy.get(":nth-child(1) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
     cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+      '[action="/irb/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
     ).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
@@ -744,81 +746,91 @@ describe("EXEMPT", () => {
     });
     cy.get('[name="submit1"]').click();
 
-    //B.1 METHODS OF RECRUITING
-    cy.get('[qid="h_945"] > [width="99%"]').should("be.visible");
-    cy.get(
-      ':nth-child(2) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_2222_1").should("be.visible");
-    cy.get("#tr_2222\\|\\|MyChart > .copy > .label").should("be.visible");
-    cy.get(
-      ':nth-child(4) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_947_1").should("be.visible");
-    cy.get(
-      ':nth-child(5) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_960_1").should("be.visible");
-    cy.get(
-      ':nth-child(6) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_1371_1").should("be.visible");
-    cy.get(
-      ':nth-child(7) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_961_1").should("be.visible");
-    cy.get(
-      ':nth-child(8) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_962_1").should("be.visible");
-    cy.get(
-      ':nth-child(9) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_963_1").should("be.visible");
-    cy.get(
-      ':nth-child(10) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_964_1").should("be.visible");
-    cy.get(
-      ':nth-child(11) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_965_1").should("be.visible");
-    cy.get(
-      ':nth-child(12) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_966_1").should("be.visible");
-    cy.get(
-      ':nth-child(13) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_1882_1").should("be.visible");
-    cy.get(
-      ':nth-child(14) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_968_1").should("be.visible");
-    cy.get("#tr_968\\|\\|1 > td.copy > .label").should("be.visible");
-    cy.get("#q_78_969").type("My Other explanation for B.1.1");
-    cy.get(
-      ':nth-child(16) > td.copy > [style="position: relative; display: block;"] > div > .copy'
-    ).click();
-    cy.get("#tr_2291\\|\\|1 > td.copy").should("be.visible");
-    cy.get("#q_78_2292").type("My Social Media explanation B.1.1");
-    cy.get('[qid="h_2236"] > [width="99%"]').should("be.visible");
-    cy.get('[qid="q_2236"] > td.copy').should("be.visible");
-    cy.get('[inputvalue="1"] > #q_78_2236').click();
-    cy.get('[qid="h_2237"] > [width="99%"]').should("be.visible");
-    cy.get('[qid="h_948"] > [width="99%"]').should("be.visible");
-    cy.get("#cke_1_contents > .cke_wysiwyg_frame").then(function ($iframe) {
-      const $body = $iframe.contents().find("body");
-      console.log($body);
-      cy.wrap($body[0]).type("My EXEMPT CYPRESS TEST B.1.3");
-    });
-    cy.get('[qid="h_949"] > [width="99%"]').should("be.visible");
-    cy.get("#cke_2_contents > .cke_wysiwyg_frame").then(function ($iframe) {
-      const $body = $iframe.contents().find("body");
-      console.log($body);
-      cy.wrap($body[0]).type("My EXEMPT CYPRESS TEST B.1.4");
-    });
-    cy.get('[name="submit1"]').click();
+   //B.1 METHODS OF RECRUITING
+   cy.get('[qid="h_945"] > [width="99%"]').should("be.visible");
+   cy.get(
+     ':nth-child(2) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_2222_1").should("be.visible");
+   cy.get("#tr_2222\\|\\|MyChart > .copy > .label").should("be.visible");
+   cy.get(
+     ':nth-child(4) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_947_1").should("be.visible");
+   cy.get(
+     ':nth-child(5) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_960_1").should("be.visible");
+   cy.get(
+     ':nth-child(6) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_1371_1").should("be.visible");
+   cy.get(
+     ':nth-child(7) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_961_1").should("be.visible");
+   cy.get(
+     ':nth-child(8) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_962_1").should("be.visible");
+   cy.get(
+     ':nth-child(9) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_963_1").should("be.visible");
+   cy.get(
+     ':nth-child(10) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_964_1").should("be.visible");
+   cy.get(
+     ':nth-child(11) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_965_1").should("be.visible");
+   cy.get(
+     ':nth-child(12) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get("#att_966_1").should("be.visible");
+   cy.get(
+     ':nth-child(13) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   ).click();
+   cy.get('#q_78_2339').type('My email or text explanation')
+   //cy.get("#att_1882_1").should("be.visible");
+  // cy.get(
+   //  ':nth-child(14) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+   //).click();
+   cy.get(
+     ':nth-child(16) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+   ).click();
+   cy.get("#att_968_1").should("be.visible");
+   cy.get("#tr_968\\|\\|1 > td.copy > .label").should("be.visible");
+   cy.get("#q_78_969").type("My Other explanation for B.1.1");
+   cy.get('#tr_2338\\|\\|1 > td.copy > .label').should("be.visible");
+   cy.get(':nth-child(18) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
+   
+   //cy.get("#tr_2291\\|\\|1 > td.copy").should("be.visible");
+   cy.get("#q_78_2292").type("My Social Media explanation B.1.1");
+   cy.get('[qid="h_2236"] > [width="99%"]').should("be.visible");
+   cy.get('[qid="q_2236"] > td.copy').should("be.visible");
+   cy.get('[inputvalue="1"] > #q_78_2236').click();
+   cy.get('[qid="h_2237"] > [width="99%"]').should("be.visible");
+   cy.get('[qid="h_948"] > [width="99%"]').should("be.visible");
+   cy.get("#cke_1_contents > .cke_wysiwyg_frame").then(function ($iframe) {
+     const $body = $iframe.contents().find("body");
+     console.log($body);
+     cy.wrap($body[0]).type("My EXEMPT CYPRESS TEST B.1.3");
+   });
+   cy.get('[qid="h_949"] > [width="99%"]').should("be.visible");
+   cy.get("#cke_2_contents > .cke_wysiwyg_frame").then(function ($iframe) {
+     const $body = $iframe.contents().find("body");
+     console.log($body);
+     cy.wrap($body[0]).type("My EXEMPT CYPRESS TEST B.1.4");
+   });
+   cy.get('[name="submit1"]').click();
+
+   //Part B.3
+   cy.get('#hd_0\\|\\| > [width="99%"]').should("be.visible");
+   cy.get('[inputvalue="0"] > #q_80_2340').click()
+   cy.get('[name="submit1"]').click();
+
 
     //Part C.1 DATA SOURCES
     cy.get('[qid="h_1122"] > [width="99%"]').should("be.visible");

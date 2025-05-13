@@ -73,7 +73,7 @@ describe("NHSR", () => {
     cy.get(":nth-child(4) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
     cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+      '[action="/irb/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
     ).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
@@ -243,10 +243,18 @@ describe("NHSR", () => {
     cy.get('[name="submit1"]').click();
 
     // C.1 DATA SOURCES
-    cy.get('[name="submit1"]').should("be.visible");
+    cy.get('[qid="h_1122"] > [width="99%"]').should("contain", "What existing records, data or human biological specimens will you be using?")
+    cy.get('#tbl_85_1122').should("be.visible");
+    cy.get(':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div').should("contain", "UNC Dental Records")
+    cy.get(':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
+    cy.get('#q_85_1133').should("be.visible");  
+
+   /*
     cy.get(
       ':nth-child(8) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
+   */
+
     cy.get('[qid="h_1283"] > [width="99%"]').should("be.visible");
     cy.get('[qid="h_1284"] > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="0"] > #q_85_1284').click();
@@ -439,7 +447,9 @@ describe("NHSR", () => {
       'td[data-title="Submitted To IRB"] > .bucket > :nth-child(2) > table > tbody > :nth-child(6) > .countTotal > a'
     ).click();
     cy.wait(1000);
-    cy.get("#bucketDataTable_filter > label > input").type(
+    cy.get("#bucketDataTable_filter > label > input").should("be.visible");
+    cy.get("#bucketDataTable_filter > label > input")
+    .type(
       "My NHSR Cypress Test"
     );
     cy.get(".confirmAcceptByIRB").click();
@@ -745,6 +755,7 @@ describe("NHSR", () => {
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
 
+    /*
     //Delete and redraft letter
     cy.get("#btnDelete").click();
     cy.wait(3000);
@@ -768,12 +779,14 @@ describe("NHSR", () => {
     cy.get("#btnSaveLetter").should("be.visible");
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
+    */
+   
     cy.get("#btnFinalizeLetterModal").click();
     cy.get(".ui-dialog-content").should("be.visible");
     cy.get(".ui-dialog-buttonset > .btn-info").click();
   });
 
-  it("Waiting PI Repsonse", () => {
+  it.only("Waiting PI Repsonse", () => {
     cy.viewport(1400, 750);
     cy.visit(Cypress.config().stageTrunkBaseUrl);
     cy.get("input#username.long").type(submissionOwner);
@@ -797,9 +810,11 @@ describe("NHSR", () => {
       cy.wait(2000);
       cy.get(".iAgreeCheckbox").click();
       cy.get(".buttonEformYellow").click();
+      cy.get('[cellspacing="2"] > tbody > :nth-child(1) > :nth-child(2)')
+      .should("contain", "Revised/Resubmitted to IRB")
     });
 
-  it("Revised-Resubmitted to IRB", () => {
+  it.only("Revised-Resubmitted to IRB", () => {
     cy.viewport(1400, 900);
     cy.visit(Cypress.config().stageTrunkBaseUrl);
     cy.get("input#username.long").type(IRBAnalyst);

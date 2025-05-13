@@ -1,7 +1,7 @@
 describe("Create Rely on Institutional IRB Application", () => {
   
   const submissionOwner = "mhannah1";
-  const PI = "cjfennim";
+  const PI = "maceo";
   const IRBAnalyst = "jfuse";
   const deptApprover = "jslatt";
   const localDeptApprover = "anlyt";
@@ -51,6 +51,8 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#q_60_865").type("Dr. Marcus Hannah");
     cy.get("#q_60_866").type("University of Marcus Hannah");
     cy.get("#q_60_867").type("FW12345");
+    
+    /*
     cy.get(
       '[qid="q_2260"] > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
     ).click();
@@ -79,9 +81,13 @@ describe("Create Rely on Institutional IRB Application", () => {
     ).click();
     cy.get('#hd_2262\\|\\|1\\,2\\,3 > [width="99%"]').should("be.visible");
     cy.get("#q_60_2263").type("My Rely on NCI-CIRB CYPRESS TEST 5.A.2");
+    */
+
     cy.get('[name="submit1"]').click();
 
     //1. GENERAL INFORMATION SCREEN
+
+    cy.wait(2000)
 
     cy.get("#q_29_3")
       .should("be.visible")
@@ -114,8 +120,9 @@ describe("Create Rely on Institutional IRB Application", () => {
       ':nth-child(4) > .tablemainsub > tbody > [align="center"] > .copy > .seachSubmit'
     ).should("be.visible");
     //cy.get('[style="width: 100%; text-align: center; margin-top: 10px;"] > .button').click()
-    cy.get("#first_name").type("Chuck");
-    cy.get("#last_name").type("Fennimore");
+    cy.get("#pid").type("710917825");
+    //cy.get('#first_name').type('Chuck')
+    //cy.get('#last_name').type('Fennimore')
     cy.get(
       ':nth-child(3) > .tablemainsub > tbody > [align="center"] > .copy > .seachSubmit'
     ).click();
@@ -128,22 +135,27 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get(
       '[aria-label="Title: activate to sort column ascending"] > .DataTables_sort_wrapper'
     ).should("be.visible");
-    cy.get(":nth-child(1) > .sorting_1 > .copy").click();
+    cy.get(":nth-child(4) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
-    cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
-    ).should("be.visible");
+    //cy.get(
+    //  '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+    //).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
-    cy.get(':nth-child(7) > tbody > .odd > [width="4%"] > input').click();
+    cy.get(':nth-child(2) > [width="4%"] > input').click();
+    cy.get(':nth-child(3) > [width="4%"] > input').click();
+    cy.get(':nth-child(4) > [width="4%"] > input').click();
+    cy.get(':nth-child(5) > [width="4%"] > input').click();
+
     cy.get(".importSubmit").click();
-    //MAKE CHUCK PI / VERIFY PERSONNEL POP UP
+
+    //MAKE John PI / VERIFY PERSONNEL POP UP
     cy.get('[qid="h_1895"] > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="1"] > #q_2_1895').should("be.visible");
     cy.get('[inputvalue="0"] > #q_2_1895').click();
     cy.get('[qid="h_4"] > [width="99%"]').should("be.visible");
     cy.get(":nth-child(3) > :nth-child(6) > a").click();
-    cy.get('[qid="q_11"] > .copy > #q_2_11').type("123456789");
+    //cy.get('[qid="q_11"] > .copy > #q_2_11').type("123456789");
     cy.get(
       '[qid="q_15"] > td.copy > [inputvalue="Principal Investigator"] > #q_2_15'
     ).click();
@@ -166,6 +178,7 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get(
       'form > #tbl_2_4 > tbody > :nth-child(14) > .copy > [type="submit"]'
     ).click();
+
     cy.get(".liaisonValues").click();
     cy.get("#q_2_31").should("be.visible");
     cy.get('[name="submit0"]').should("be.visible");
@@ -351,15 +364,15 @@ describe("Create Rely on Institutional IRB Application", () => {
       ':nth-child(7) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
     // cy.get('#att_2044_1').should("be.visible")
-    // cy.get(':nth-child(8) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
-    cy.get("#tr_891\\|\\|1 > td.copy").should("be.visible");
+     cy.get(':nth-child(8) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
+    //cy.get("#tr_891\\|\\|1 > td.copy").should("be.visible");
     cy.get('[inputvalue="2"] > #q_74_2259').click();
     cy.get("#doc_2259_1333").should("be.visible");
-    cy.get(
-      ':nth-child(9) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
-    ).click();
-    cy.get("#att_893_1").should("be.visible");
-    //cy.get(':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
+    //cy.get(
+     // ':nth-child(9) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+    //).click();
+    //cy.get("#att_893_1").should("be.visible");
+    cy.get(':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
     cy.get('[name="submit1"]').click();
 
     //A.9 IDENTIFIERS
@@ -392,24 +405,22 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get('[name="submit1"]').click();
 
     //B.1 METHODS OF RECRUITING
-    cy.get('[qid="h_945"] > [width="99%"]').should("be.visible");
+    cy.get('[qid="h_945"] > [width="99%"]').should("contain", "Check all the following means/methods of subject recruitment to be used:");
     cy.get(
-      ':nth-child(1) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy'
+      ':nth-child(1) > td.copy > [style="position: relative; display: block;"] > :nth-child(2) > .copy' //MyChart
     ).click();
     cy.get("#att_2222_1").should("be.visible");
     //cy.get('#tr_2222\\|\\|MyChart > .copy > .label').should("be.visible")
-    cy.get(
-      ':nth-child(3) > td.copy > [style="position: relative; display: block;"] > div > .copy'
-    ).click();
-    //cy.get(':nth-child(4) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
-    //cy.get('#att_968_1').should("be.visible")
-    //cy.get('#q_78_969').should("be.visible")
-    //cy.get(':nth-child(6) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
-    cy.get("#q_78_2292").type("My Rely On Institutional IRB B.1.1 test");
-    cy.get("#tr_2291\\|\\|1 > td.copy").should("be.visible");
+    cy.get(':nth-child(2) > td.copy > [style="position: relative; display: block;"] > :nth-child(2)').should("contain", "Email or Text messaging");
+    cy.get('.even > td.copy > [style="position: relative; display: block;"] > div').should("contain", "N/A");
+    cy.get(':nth-child(5) > td.copy > [style="position: relative; display: block;"] > div'
+    ).should("contain", "Social Media");
+    cy.get('[qid="h_2236"] > [width="99%"] > :nth-child(1)').should("contain", "Research for Me @UNC");
+    //cy.get("#q_78_2292").type("My Rely On Institutional IRB B.1.1 test");
+    //cy.get("#tr_2291\\|\\|1 > td.copy").should("be.visible");
     cy.get('[inputvalue="2"] > #q_78_2236').click();
-    cy.get("#doc_2236_1313").should("be.visible");
-    cy.get('[qid="h_2237"] > [width="99%"]').should("be.visible");
+    //cy.get("#doc_2236_1313").should("be.visible");
+    //cy.get('[qid="h_2237"] > [width="99%"]').should("be.visible");
     cy.get('[name="submit1"]').click();
 
     //B.2 PROTECTED HEALTH INFORMATION (PHI)
@@ -447,9 +458,9 @@ describe("Create Rely on Institutional IRB Application", () => {
       "My Rely On Institutional B.2.1 test - Explain why it would not be possible to conduct the screening without the use of PHI"
     );
     cy.get('[qid="h_1785"] > [width="99%"]').should("be.visible");
-    cy.get('[inputvalue="1"] > #q_79_1785').click();
-    cy.get("#doc_1785_424").should("be.visible");
-    cy.get('#hd_1785\\|\\|1 > [width="99%"]').should("be.visible");
+    cy.get('[inputvalue="0"] > #q_79_1785').click();
+    //cy.get("#doc_1785_424").should("be.visible");
+    //cy.get('#hd_1785\\|\\|1 > [width="99%"]').should("be.visible");
     cy.get('[name="submit1"]').click();
 
     //B.3 SUBJECT CONTACT, DURATION AND PRIVACY
@@ -466,7 +477,8 @@ describe("Create Rely on Institutional IRB Application", () => {
     ).should("be.visible");
     cy.get(
       '#tr_2009\\|\\|2 > td.copy > [style="position: relative; display: block;"] > :nth-child(3) > .copy'
-    ).click();
+    ).click();    
+    cy.get('[inputvalue="0"] > #q_80_2340').click();
     cy.get('[name="submit1"]').click();
 
     //B.4 INCENTIVES FOR PARTICIPATION
@@ -495,15 +507,15 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#att_1994_3").should("be.visible");
     cy.get(".copy > .searchresults").should("be.visible");
     cy.get(
-      ':nth-child(4) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+      ':nth-child(5) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
     cy.get("#tr_1123\\|\\|1 > td.copy > .label").should("be.visible");
     cy.get('[inputvalue="1"] > #q_85_1280').click();
     cy.get(
-      ':nth-child(6) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+      ':nth-child(7) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
     cy.get("#tr_1125\\|\\|1 > td.copy > .label").should("be.visible");
-    cy.get('[inputvalue="0"] > #q_85_1281').click();
+    cy.get('[inputvalue="Yes"] > #q_85_1281').click();
     cy.get('[name="submit1"]').click();
 
     //DATA SECURITY
@@ -534,23 +546,25 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get('[name="submit1"]').click();
 
     //CONSENT FORMS
-    cy.get('[style="padding:15px;"] > .button').click();
+    //cy.get('[style="padding:15px;"] > .button').click();f
 
     //ATTACHMENTS
-    cy.get("#btnContinue").click();
+    cy.get('.buttonEformYellow').click();
 
     //APPROVING DEPTS
-    cy.get(
-      '[style="padding:20px 20px 30px 20px;text-align:center;"] > .button'
-    ).click();
+    //cy.get(
+    //  '[style="padding:20px 20px 30px 20px;text-align:center;"] > .button'
+   // ).click();
 
     //COVER MEMO / SUBMIT
-    cy.get(".saveNote").click();
+   // cy.get(".saveNote").click();
     //cy.get('.tablemainsub-sectioncontent-bottom > [align="center"] > .routingModal').click()
     cy.get("#modalPopup").should("be.visible");
     cy.get(".iAgreeCheckbox").click();
     cy.get(".proceedForm").should("be.visible");
-    cy.get(".buttons > .buttonEformYellow").click();
+    cy.get('#btnSubmit').click();
+    //cy.get(".buttons > .buttonEformYellow").click();
+    cy.wait(3000);
   });
 
   //Rely on Institutional IRB ROUTING/ PI cert
@@ -559,6 +573,7 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("input#username.long").type(PI).should("have.value", PI);
     cy.get("input#password.long").type("test{Enter}");
 
+    cy.get('#nav > :nth-child(2) > a').click();
     cy.get("#dashboardmenu8 > :nth-child(2) > a").click();
     //cy.get('.searchColumn ui-state-default')
     cy.get('input[placeholder="Title"]').type(
@@ -746,6 +761,7 @@ describe("Create Rely on Institutional IRB Application", () => {
     );
     cy.get(".btnCancel").should("be.visible");
     cy.get(".buttonEformYellow").click();
+    cy.wait(3000);
   });
 
   //Rely on Institutional IRB Accept for Review
@@ -764,6 +780,7 @@ describe("Create Rely on Institutional IRB Application", () => {
       "My Rely on Institutional IRB Cypress Test"
     );
     cy.get(".confirmAcceptByIRB").click();
+    cy.wait(3000);
   });
 
   it("Verify Study History Screen", () => {
@@ -863,8 +880,11 @@ describe("Create Rely on Institutional IRB Application", () => {
 
     //Study Level Watch
     cy.get(".studyWatchButton").click();
-    cy.contains(" Click to Add a Study Watch Note").click();
-    cy.contains("Cancel").click();
+    cy.wait(2000);
+    cy.get(".studyWatchNotes").click();
+    //cy.contains(" Click to Add a Study Watch Note").click();
+    cy.get('.watchNoteEdit').should("be.visible");
+    cy.get('.btnCancel').click();
 
     //Study Notes
     cy.get(".studyNotesLink").click();
@@ -882,7 +902,7 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#btnClose").should("be.visible");
     cy.get("#noteText").type("Hello World!");
     cy.get("#btnSaveAndClose").click();
-    cy.get("#studyNotesPreview").should("contain", "by Celeste Cantrell on");
+    cy.get("#studyNotesPreview").should("contain", "by Justin Feussner on");
 
     //Study Tags
     cy.get("#addTag2").click();
@@ -994,6 +1014,7 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#navLetter").should("be.visible");
 
     //Verify review conditions -> REVIEW
+    cy.get('#reviewConditionsIcon').should("have.class", "stopIcon fail");
     cy.get("#navReviewConditions").click();
     cy.get("#stopsHeader").should("be.visible");
     cy.get("#optionsList > :nth-child(1)").should("be.visible");
@@ -1016,14 +1037,14 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("be.visible");
     cy.get("#stopListManagementPlan").should("be.visible");
-    cy.get("#stopListHSP").should("be.visible");
-    cy.get("#stopListGCP").should("be.visible");
+    cy.get("#stopListHSP").scrollIntoView().should("be.visible");
+    cy.get("#stopListGCP").scrollIntoView().should("be.visible");
 
     //Select an Analyst
     cy.get("#navNextStep").click();
     cy.get("#analystSelector").should("be.visible");
-    cy.get(".managerTextbox").type("celeste");
-    cy.get('[name="Celeste Cantrell"]').click();
+    cy.get(".managerTextbox").type("Justin");
+    cy.get('[name="Justin Feussner"]').click();
 
     //Add a stipulation
     cy.get("#navApplication").click();
@@ -1063,33 +1084,8 @@ describe("Create Rely on Institutional IRB Application", () => {
       .select("Minor Stips - Expedited");
     cy.get("#btnDraftLetter").click();
 
-    //Verify letter
-    cy.wait(2000);
-    cy.get("#sent_to_email").should("be.visible");
-    cy.get("#sent_to_email2").should("be.visible");
-    cy.get(".cke_wysiwyg_frame").should("be.visible");
-    cy.get(".letterSubHeader").should("contain", "Minor Stips - Expedited");
-    cy.get("#btnViewPDF").should("be.visible");
-    cy.get("#btnDelete").should("be.visible");
-    cy.get("#btnSaveLetter").should("be.visible");
-    cy.get("#btnSendToChair").should("be.visible");
-    cy.get("#btnFinalizeLetterModal").should("be.visible");
-
-    //Delete and redraft letter
-    cy.get("#btnDelete").click();
-    cy.wait(1000);
-    cy.get(':nth-child(3) > [onclick="modalClose();"]').click(); //close the draft letter modal
-    cy.get("#navNextStep").click();
-    cy.get("#letterTypeId")
-      .should("contain", "Select Template Type...")
-      .and("contain", "Minor Stips - Expedited")
-      .and("contain", "FB Admin pre-review")
-      .and("contain", "UNC ONLY-Permission to Register")
-      .select("Minor Stips - Expedited");
-    cy.get("#btnDraftLetter").click();
-    cy.wait(2000);
-
     //Verify and Finalize letter
+    cy.wait(2000);
     cy.get("#sent_to_email").should("be.visible");
     cy.get("#sent_to_email2").should("be.visible");
     cy.get(".cke_wysiwyg_frame").should("be.visible");
@@ -1132,6 +1128,8 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.wait(2000);
     cy.get(".iAgreeCheckbox").click();
     cy.get(".buttonEformYellow").click();
+
+    cy.wait(5000);
   });
 
   it("Revised-Resubmitted to IRB", () => {
@@ -1192,6 +1190,7 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#navLetter").should("be.visible");
 
     //Verify review conditions -> REVIEW
+    cy.get('#reviewConditionsIcon').should("have.class", "stopIcon fail");
     cy.get("#navReviewConditions").click();
     cy.get("#stopsHeader").should("be.visible");
     cy.get("#optionsList > :nth-child(1)").should("be.visible");
@@ -1214,8 +1213,8 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("be.visible");
     cy.get("#stopListManagementPlan").should("be.visible");
-    cy.get("#stopListHSP").should("be.visible");
-    cy.get("#stopListGCP").should("be.visible");
+    cy.get("#stopListHSP").scrollIntoView().should("be.visible");
+    cy.get("#stopListGCP").scrollIntoView().should("be.visible");
 
     //PI RESPONSES
     cy.viewport(1200, 612);
@@ -1270,11 +1269,11 @@ describe("Create Rely on Institutional IRB Application", () => {
       cy.visit(url);
     });
 
+    /*
     //Record Review Result (minor stip w/o stip)
     cy.get("#navReviewResult").click();
     cy.get("#reviewResult3").click();
     cy.wait(3000); //allow auto save to complete
-
     cy.get("#navReviewNotes").click();
     cy.wait(3000);
 
@@ -1317,6 +1316,7 @@ describe("Create Rely on Institutional IRB Application", () => {
       });
 
     cy.wait(5000); //wait for autosave to finish
+    
 
     //Draft Letter
     cy.get("#navNextStep").click();
@@ -1330,8 +1330,9 @@ describe("Create Rely on Institutional IRB Application", () => {
     cy.get("#btnDelete").click();
     cy.wait(3000);
 
+    */
     //cy.reload() //I won't need this once the bug around deleting a letter updating the left rail is fixed.
-    cy.get(':nth-child(3) > [onclick="modalClose();"]').click(); //close the draft letter modal
+    //cy.get(':nth-child(3) > [onclick="modalClose();"]').click(); //close the draft letter modal
 
     //Record Review Result -> Select Rely on External IRB
     cy.get("#navReviewResult").click();

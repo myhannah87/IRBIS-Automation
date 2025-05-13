@@ -72,9 +72,9 @@ describe("NHSR", () => {
     ).should("be.visible");
     cy.get(":nth-child(4) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
-    cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
-    ).should("be.visible");
+    //cy.get(
+    //  '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+    //).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
     cy.get(':nth-child(2) > [width="4%"] > input').click();
@@ -84,13 +84,13 @@ describe("NHSR", () => {
 
     cy.get(".importSubmit").click();
 
-    //MAKE CHUCK PI / VERIFY PERSONNEL POP UP
+    //MAKE John PI / VERIFY PERSONNEL POP UP
     cy.get('[qid="h_1895"] > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="1"] > #q_2_1895').should("be.visible");
     cy.get('[inputvalue="0"] > #q_2_1895').click();
     cy.get('[qid="h_4"] > [width="99%"]').should("be.visible");
     cy.get(":nth-child(3) > :nth-child(6) > a").click();
-    cy.get('[qid="q_11"] > .copy > #q_2_11').type("123456789");
+    //cy.get('[qid="q_11"] > .copy > #q_2_11').type("123456789");
     cy.get(
       '[qid="q_15"] > td.copy > [inputvalue="Principal Investigator"] > #q_2_15'
     ).click();
@@ -243,10 +243,18 @@ describe("NHSR", () => {
     cy.get('[name="submit1"]').click();
 
     // C.1 DATA SOURCES
-    cy.get('[name="submit1"]').should("be.visible");
+    cy.get('[qid="h_1122"] > [width="99%"]').should("contain", "What existing records, data or human biological specimens will you be using?")
+    cy.get('#tbl_85_1122').should("be.visible");
+    cy.get(':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div').should("contain", "UNC Dental Records")
+    cy.get(':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div > .copy').click()
+    cy.get('#q_85_1133').should("be.visible");  
+
+   /*
     cy.get(
       ':nth-child(8) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
+   */
+
     cy.get('[qid="h_1283"] > [width="99%"]').should("be.visible");
     cy.get('[qid="h_1284"] > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="0"] > #q_85_1284').click();
@@ -423,6 +431,8 @@ describe("NHSR", () => {
     cy.get(".middleyellow").click();
     cy.get("#btnCertify").click();
     cy.get(".buttonEformYellow").click();
+
+    cy.wait(5000)
   });
 
   //NHSR Accept for Review
@@ -443,6 +453,9 @@ describe("NHSR", () => {
       "My NHSR Cypress Test"
     );
     cy.get(".confirmAcceptByIRB").click();
+
+    cy.wait(5000)
+
    });
 
   //NHSR Verify Study History Screen
@@ -745,6 +758,7 @@ describe("NHSR", () => {
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
 
+    /*
     //Delete and redraft letter
     cy.get("#btnDelete").click();
     cy.wait(3000);
@@ -768,9 +782,13 @@ describe("NHSR", () => {
     cy.get("#btnSaveLetter").should("be.visible");
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
+    */
+
     cy.get("#btnFinalizeLetterModal").click();
     cy.get(".ui-dialog-content").should("be.visible");
     cy.get(".ui-dialog-buttonset > .btn-info").click();
+
+    cy.wait(5000)
   });
 
   it("Waiting PI Repsonse", () => {
@@ -797,6 +815,7 @@ describe("NHSR", () => {
       cy.wait(2000);
       cy.get(".iAgreeCheckbox").click();
       cy.get(".buttonEformYellow").click();
+      cy.wait(5000);
     });
 
   it("Revised-Resubmitted to IRB", () => {

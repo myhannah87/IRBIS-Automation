@@ -1,5 +1,5 @@
 describe("Personnel Modification", () => {
-  const IRBNumber = '22-0254'
+  const IRBNumber = "22-0254";
   const PI = "carlac";
   const IRBAnalyst = "jfuse";
 
@@ -82,18 +82,18 @@ describe("Personnel Modification", () => {
 
     //PERSONNEL MOD HEADER
     cy.get("#divNSIHeader > .hd").should("contain", "Personnel Modification");
-    cy.get(':nth-child(2) > tbody > :nth-child(1) > [width="14%"]').should(
+    cy.get(':nth-child(1) > tbody > :nth-child(1) > [width="14%"]').should(
       "contain",
       "IRB Number:"
     );
     cy.get(".classToLoad").should("be.visible");
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(1) > :nth-child(3)"
+      ".bd > :nth-child(1) > tbody > :nth-child(1) > :nth-child(3)"
     ).should("contain", "Study Status:");
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(1) > :nth-child(4)"
-    ).should("be.visible");
-    cy.get(':nth-child(2) > tbody > :nth-child(1) > [nowrap="nowrap"]').should(
+      ".bd > :nth-child(1) > tbody > :nth-child(1) > :nth-child(4)"
+    ).should("contain", "Rely on External IRB");
+    cy.get(':nth-child(1) > tbody > :nth-child(1) > [nowrap="nowrap"]').should(
       "contain",
       "Admin Annual Review Date:"
     );
@@ -101,21 +101,21 @@ describe("Personnel Modification", () => {
       ".bd > :nth-child(2) > tbody > :nth-child(1) > :nth-child(6)"
     ).should("be.visible");
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(2) > :nth-child(1)"
+      ".bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(1)"
     ).should("contain", "PI:");
-    cy.get(":nth-child(2) > tbody > :nth-child(2) > :nth-child(3)").should(
+    cy.get(":nth-child(1) > tbody > :nth-child(2) > :nth-child(3)").should(
       "contain",
       "IRB:"
     );
-    cy.get(":nth-child(2) > tbody > :nth-child(2) > :nth-child(5)").should(
+    cy.get(":nth-child(1) > tbody > :nth-child(2) > :nth-child(5)").should(
       "contain",
       "Expiration Date:"
     );
-    cy.get(":nth-child(2) > tbody > :nth-child(2) > :nth-child(6)").should(
+    cy.get(":nth-child(1) > tbody > :nth-child(2) > :nth-child(6)").should(
       "be.visible"
     );
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(3) > :nth-child(1)"
+      ".bd > :nth-child(1) > tbody > :nth-child(3) > :nth-child(1)"
     ).should("contain", "Sponsor:");
     cy.get('[colspan="3"]').should("be.visible");
     cy.get(":nth-child(4) > .label").should("contain", "Study Title:");
@@ -467,6 +467,7 @@ describe("Personnel Modification", () => {
       "Designing a Digital Health Intervention"
     );
     cy.get("#bucketDataTable > tbody > .odd > :nth-child(1) > a").click();
+    cy.wait(3000);
   });
 
   //PERSONNEL MOD - STUDY HISTORY SCREEN/SUBMISSION DETAILS
@@ -560,12 +561,16 @@ describe("Personnel Modification", () => {
     cy.get(".swimlane1 > div").should("be.visible");
 
     // Get window object
-    cy.window().then((win) => {
-      // Replace window.open(url, target)-function with our own arrow function
-      cy.stub(win, 'open').callsFake (url => 
-        // change window location to be same as the popup url
-        win.location.href = Cypress.config().devMaintBaseUrl + url);
-      }).as("application"); // alias it with popup, so we can refer it with @popup
+    cy.window()
+      .then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("application"); // alias it with popup, so we can refer it with @popup
     // Click button which triggers javascript's window.open() call
     cy.contains("Application").click();
 
@@ -751,57 +756,59 @@ describe("Personnel Modification", () => {
       console.log($body);
       cy.wrap($body[0]).type("My test PM stip");
     });
-      cy.get("#applicationForm > #stip0 > .stipButtons > .save").click();
-      cy.get(".editStipulation > p").should("be.visible");
-      //cy.get('#stipCount').should('contain', '(1)')
+    cy.get("#applicationForm > #stip0 > .stipButtons > .save").click();
+    cy.get(".editStipulation > p").should("be.visible");
+    //cy.get('#stipCount').should('contain', '(1)')
 
-      cy.get("#navReviewResult").click();
+    cy.get("#navReviewResult").click();
 
-      //Disabled review results:
-      cy.get("#reviewResult1").should("have.class", "stipsNotAllowed"); //Acknowledged
-      cy.get("#reviewResult2").should("contain", "Minor Stipulations");
-      cy.get("#reviewResult3").should("have.class", "stipsNotAllowed"); //Withdrawn
+    //Disabled review results:
+    cy.get("#reviewResult1").should("have.class", "stipsNotAllowed"); //Acknowledged
+    cy.get("#reviewResult2").should("contain", "Minor Stipulations");
+    cy.get("#reviewResult3").should("have.class", "stipsNotAllowed"); //Withdrawn
 
-      //Pending COI Review
-      cy.get("#pendingCOIReview_div").should("be.visible");
-      cy.get("#pendingCOIReview").should("be.visible");
-      cy.get("#pendingCOIReview-Text").should(
-        "contain",
-        "Pending COI Review (when checked)"
-      );
+    //Pending COI Review
+    cy.get("#pendingCOIReview_div").should("be.visible");
+    cy.get("#pendingCOIReview").should("be.visible");
+    cy.get("#pendingCOIReview-Text").should(
+      "contain",
+      "Pending COI Review (when checked)"
+    );
 
-      //Select Minor Stipulations
-      cy.get("#reviewResult2").click();
-      cy.wait(3000);
+    //Select Minor Stipulations
+    cy.get("#reviewResult2").click();
+    cy.wait(3000);
 
-      //Review Conditions: Pass check
-      cy.get("#reviewConditionsIcon").should("have.class", "stopIcon pass");
+    //Review Conditions: Pass check
+    cy.get("#reviewConditionsIcon").should("have.class", "stopIcon pass");
 
-      //Draft Letter
-      cy.get("#navLetter").click();
-      //cy.contains('Draft Letter').should("be.visible").click()
-      cy.get("#modalPopup").should("be.visible");
-      cy.get('#hasTemplates > [style="display: block;"]').should(
-        "contain",
-        "Minor Stips - Expedited"
-      );
-      cy.get("#btnDraftLetter").click();
+    //Draft Letter
+    cy.get("#navLetter").click();
+    //cy.contains('Draft Letter').should("be.visible").click()
+    cy.get("#modalPopup").should("be.visible");
+    cy.get('#hasTemplates > [style="display: block;"]').should(
+      "contain",
+      "Minor Stips - Expedited"
+    );
+    cy.get("#btnDraftLetter").click();
 
-      //FINALIZE PERSONNEL MOD REVIEW - MINOR STIP LETTER
-      cy.get("#btnFinalizeLetterModal").click();
+    //FINALIZE PERSONNEL MOD REVIEW - MINOR STIP LETTER
+    cy.get("#btnFinalizeLetterModal").click();
 
-      //Click ok in js confirmation alert
-      cy.get(".ui-dialog").should("be.visible");
-      cy.get(".ui-dialog-content > div").should(
-        "contain",
-        "Are you sure you want to finalize this letter?"
-      );
-      cy.get(".ui-dialog-buttonset > .btn-default").should("contain", "Cancel");
-      cy.get(".ui-dialog-buttonset > .btn-info")
-        .should("contain", "Finalize")
-        .click();
-    });
-  
+    //Click ok in js confirmation alert
+    cy.get(".ui-dialog").should("be.visible");
+    cy.get(".ui-dialog-content > div").should(
+      "contain",
+      "Are you sure you want to finalize this letter?"
+    );
+    cy.get(".ui-dialog-buttonset > .btn-default").should("contain", "Cancel");
+    cy.get(".ui-dialog-buttonset > .btn-info")
+      .should("contain", "Finalize")
+      .click();
+
+    cy.wait(10000);
+  });
+
   it("Personnel Modification - Waiting PI Response", () => {
     cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long").type(PI).should("have.value", PI);
@@ -909,40 +916,38 @@ describe("Personnel Modification", () => {
 
     //PERSONNEL MOD HEADER
     cy.get("#divNSIHeader > .hd").should("contain", "Personnel Modification");
-    cy.get(':nth-child(2) > tbody > :nth-child(1) > [width="14%"]').should(
+    cy.get(':nth-child(1) > tbody > :nth-child(1) > [width="14%"]').should(
       "contain",
       "IRB Number:"
     );
     cy.get(".classToLoad").should("be.visible");
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(1) > :nth-child(3)"
+      ".bd > :nth-child(1) > tbody > :nth-child(1) > :nth-child(3)"
     ).should("contain", "Study Status:");
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(1) > :nth-child(4)"
+      ".bd > :nth-child(1) > tbody > :nth-child(1) > :nth-child(4)"
     ).should("be.visible");
-    cy.get(':nth-child(2) > tbody > :nth-child(1) > [nowrap="nowrap"]').should(
+    cy.get(':nth-child(1) > tbody > :nth-child(1) > [nowrap="nowrap"]').should(
       "contain",
       "Admin Annual Review Date:"
     );
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(1) > :nth-child(6)"
+      ".bd > :nth-child(1) > tbody > :nth-child(1) > :nth-child(6)"
     ).should("be.visible");
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(2) > :nth-child(1)"
+      "#divNSIHeader > .bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(1)"
     ).should("contain", "PI:");
-    cy.get(":nth-child(2) > tbody > :nth-child(2) > :nth-child(3)").should(
-      "contain",
-      "IRB:"
-    );
-    cy.get(":nth-child(2) > tbody > :nth-child(2) > :nth-child(5)").should(
-      "contain",
-      "Expiration Date:"
-    );
-    cy.get(":nth-child(2) > tbody > :nth-child(2) > :nth-child(6)").should(
-      "be.visible"
-    );
     cy.get(
-      ".bd > :nth-child(2) > tbody > :nth-child(3) > :nth-child(1)"
+      "#divNSIHeader > .bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(3)"
+    ).should("contain", "IRB:");
+    cy.get(
+      "#divNSIHeader > .bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(5)"
+    ).should("contain", "Expiration Date:");
+    cy.get(
+      "#divNSIHeader > .bd > :nth-child(1) > tbody > :nth-child(2) > :nth-child(6)"
+    ).should("be.visible");
+    cy.get(
+      "#divNSIHeader > .bd > :nth-child(1) > tbody > :nth-child(3) > :nth-child(1)"
     ).should("contain", "Sponsor:");
     cy.get('[colspan="3"]').should("be.visible");
     cy.get(":nth-child(4) > .label").should("contain", "Study Title:");
@@ -1111,20 +1116,22 @@ describe("Personnel Modification", () => {
       cy.wrap($body[0]).type("My test PM Response to stipulations");
     });
 
-      cy.get(".button").click();
+    cy.get(".button").click();
 
-      //RESBUMIT PERSONNEL MODIFICATION
-      cy.get("#itemListResubmit > dd").click();
-      cy.get("#modalPopup").should("be.visible");
-      cy.get(".alertMessageBox").should(
-        "contain",
-        "Are you ready to resubmit this Personnel Modification Form?"
-      );
-      cy.get("form > .copy")
-        .should("contain", "Resubmit Personnel Modification")
-        .click();
-    });
-  
+    //RESBUMIT PERSONNEL MODIFICATION
+    cy.get("#itemListResubmit > dd").click();
+    cy.get("#modalPopup").should("be.visible");
+    cy.get(".alertMessageBox").should(
+      "contain",
+      "Are you ready to resubmit this Personnel Modification Form?"
+    );
+    cy.get("form > .copy")
+      .should("contain", "Resubmit Personnel Modification")
+      .click();
+
+    cy.wait(6000);
+  });
+
   it("Personnel Modification - Verify Resubmitted Review popup", () => {
     cy.visit(Cypress.config().devMaintBaseUrl);
     // cy.visit('https://orisdev.research.unc.edu/irb_maint/index.cfm?event=admin.reviewWindow&reviewId=592703&appId=472723');
@@ -1146,19 +1153,23 @@ describe("Personnel Modification", () => {
     cy.get("#bucketDataTable > tbody > .odd > :nth-child(1) > a").click();
 
     // Get window object
-    cy.window().then((win) => {
-      // Replace window.open(url, target)-function with our own arrow function
-      cy.stub(win, 'open').callsFake (url => 
-        // change window location to be same as the popup url
-        win.location.href = Cypress.config().devMaintBaseUrl + url);
-      }).as("application"); // alias it with popup, so we can refer it with @popup
+    cy.window()
+      .then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("application"); // alias it with popup, so we can refer it with @popup
     // Click button which triggers javascript's window.open() call
     cy.contains("Application").click();
 
     // Click button which triggers javascript's window.open() call
     cy.contains("Application").should("be.visible").click();
     // Make sure that it triggered window.open function call
-    cy.get("@popup").should("be.called");
+    //cy.get("@popup").should("be.called");
 
     // CAPTURE URL OF REVIEW WINDOW
     cy.url().as("reviewWindow");
@@ -1293,13 +1304,18 @@ describe("Personnel Modification", () => {
     cy.viewport(1200, 612);
 
     // Get window object
-    cy.window().then((win) => {
-      // Replace window.open(url, target)-function with our own arrow function
-      cy.stub(win, 'open').callsFake (url => 
-        // change window location to be same as the popup url
-        win.location.href = Cypress.config().devMaintBaseUrl + url);
-      }).as("popup"); // alias it with popup, so we can refer it with @popup
+    cy.window()
+      .then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("popup"); // alias it with popup, so we can refer it with @popup
 
+      
     //PI Responses
     cy.get("#navPIResponses").click();
     cy.viewport(1200, 612);
@@ -1365,10 +1381,11 @@ describe("Personnel Modification", () => {
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("have.class", "stopIcon pass");
     cy.get("#stopListManagementPlan").should("have.class", "stopIcon na");
-    cy.get("#stopListHSP")
+    cy.get("#stopListHSP").scrollIntoView()
       .should("be.visible")
       .should("have.class", "stopIcon attention");
-    cy.get("#stopListGCP").should("have.class", "stopIcon na");
+    cy.get("#stopListGCP").scrollIntoView()
+      .should("have.class", "stopIcon na");
     cy.get("#closeNavContainer").click();
 
     //Draft Letter
@@ -1397,4 +1414,3 @@ describe("Personnel Modification", () => {
       .click();
   });
 });
-

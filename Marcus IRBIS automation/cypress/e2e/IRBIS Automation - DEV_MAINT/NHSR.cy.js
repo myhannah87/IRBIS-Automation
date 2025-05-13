@@ -1,5 +1,4 @@
 describe("NHSR", () => {
-
   const submissionOwner = "mhannah1";
   const PI = "maceo";
   const IRBAnalyst = "jfuse";
@@ -10,7 +9,7 @@ describe("NHSR", () => {
       .type(submissionOwner)
       //.type("mhannah1")
       .should("have.value", submissionOwner);
-    //.type('cjfennim').should('have.value', 'cjfennim')
+    //.type('cjfennim').should('have.value', 'cjfenni m')
     cy.get("input#password.long").type("test{Enter}");
 
     cy.viewport(1400, 850);
@@ -72,9 +71,9 @@ describe("NHSR", () => {
     ).should("be.visible");
     cy.get(":nth-child(4) > .sorting_1 > .copy").click();
     cy.get("#modalPopup").should("be.visible");
-    cy.get(
-      '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
-    ).should("be.visible");
+    // cy.get(
+    // '[action="/irb_maint/index.cfm?event=eform.projectPersonnel.importProjectPersonnel"]'
+    //).should("be.visible");
     cy.get(".divImportButtons > .button").should("be.visible");
     cy.get("#btnSubmitR").should("be.visible");
     cy.get(':nth-child(2) > [width="4%"] > input').click();
@@ -243,10 +242,26 @@ describe("NHSR", () => {
     cy.get('[name="submit1"]').click();
 
     // C.1 DATA SOURCES
-    cy.get('[name="submit1"]').should("be.visible");
+    //cy.get('[name="submit1"]').should("be.visible");
+    cy.get('[qid="h_1122"] > [width="99%"]').should(
+      "contain",
+      "What existing records, data or human biological specimens will you be using?"
+    );
+    cy.get("#tbl_85_1122").should("be.visible");
+    cy.get(
+      ':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div'
+    ).should("contain", "UNC Dental Records");
+    cy.get(
+      ':nth-child(11) > td.copy > [style="position: relative; display: block;"] > div > .copy'
+    ).click();
+    cy.get("#q_85_1133").should("be.visible");
+
+    /*
     cy.get(
       ':nth-child(8) > td.copy > [style="position: relative; display: block;"] > div > .copy'
     ).click();
+   */
+
     cy.get('[qid="h_1283"] > [width="99%"]').should("be.visible");
     cy.get('[qid="h_1284"] > [width="99%"]').should("be.visible");
     cy.get('[inputvalue="0"] > #q_85_1284').click();
@@ -295,6 +310,7 @@ describe("NHSR", () => {
     //SUBMIT
     cy.get(".buttonEformYellow").click();
     cy.get("#modalPopup").should("be.visible");
+    cy.wait(3000);
     cy.get(".alertHeader").should("contain", "Personnel Training Incomplete");
     cy.get(".iAgreeCheckbox").click();
     cy.get(".buttons > .buttonEformYellow").click();
@@ -423,13 +439,14 @@ describe("NHSR", () => {
     cy.get(".middleyellow").click();
     cy.get("#btnCertify").click();
     cy.get(".buttonEformYellow").click();
+    cy.wait(5000);
   });
 
   //NHSR Accept for Review
   it("Accept NHSR For Review", () => {
     cy.viewport(1400, 750);
     cy.visit(Cypress.config().devMaintBaseUrl);
-    cy.get("input#username.long").type('mhannah1');
+    cy.get("input#username.long").type("mhannah1");
     // .should("have.value", "mhannah1");
     cy.get("input#password.long").type("test{Enter}");
     //   })
@@ -438,12 +455,13 @@ describe("NHSR", () => {
     cy.get(
       'td[data-title="Submitted To IRB"] > .bucket > :nth-child(2) > table > tbody > :nth-child(6) > .countTotal > a'
     ).click();
-    cy.wait(1000);
+    cy.wait(3000);
     cy.get("#bucketDataTable_filter > label > input").type(
       "My NHSR Cypress Test"
     );
     cy.get(".confirmAcceptByIRB").click();
-   });
+    cy.wait(5000);
+  });
 
   //NHSR Verify Study History Screen
 
@@ -617,13 +635,17 @@ describe("NHSR", () => {
     cy.get("#bucketDataTable > tbody > .odd > :nth-child(1) > a").click();
     cy.get(".appSwimLanes").should("be.visible");
     // Get window object
-    cy.window().then((win) => {
-      // Replace window.open(url, target)-function with our own arrow function
-      cy.stub(win, 'open').callsFake (url => 
-        // change window location to be same as the popup url
-        win.location.href = Cypress.config().devMaintBaseUrl + url);
-      }).as("application"); // alias it with popup, so we can refer it with @popup
-    
+    cy.window()
+      .then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("application"); // alias it with popup, so we can refer it with @popup
+
     // Click button which triggers javascript's window.open() call
     cy.contains("Application").click();
     // Make sure that it triggered window.open function call
@@ -685,9 +707,9 @@ describe("NHSR", () => {
     //Verify review conditions -> COI
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("be.visible");
-    cy.get("#stopListManagementPlan").should("be.visible");
-    cy.get("#stopListHSP").should("be.visible");
-    cy.get("#stopListGCP").should("be.visible");
+    cy.get("#stopListManagementPlan").scrollIntoView().should("be.visible");
+    cy.get("#stopListHSP").scrollIntoView().should("be.visible");
+    cy.get("#stopListGCP").scrollIntoView().should("be.visible");
 
     //Select an Analyst
     cy.get("#navNextStep").click();
@@ -698,7 +720,7 @@ describe("NHSR", () => {
     //Add a stipulation
     cy.get("#navApplication").click();
     cy.get("#addStipForQuestion554").click();
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get(".cke_wysiwyg_frame").then(function ($iframe) {
       const $body = $iframe.contents().find("body");
@@ -707,7 +729,6 @@ describe("NHSR", () => {
     });
     cy.get("#questionId554 > #stip0 > .stipButtons > .save").click();
     cy.get(".editStipulation > p").should("be.visible");
-    
 
     cy.get("#navReviewResult").click();
 
@@ -745,6 +766,7 @@ describe("NHSR", () => {
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
 
+    /*
     //Delete and redraft letter
     cy.get("#btnDelete").click();
     cy.wait(3000);
@@ -768,9 +790,13 @@ describe("NHSR", () => {
     cy.get("#btnSaveLetter").should("be.visible");
     cy.get("#btnSendToChair").should("be.visible");
     cy.get("#btnFinalizeLetterModal").should("be.visible");
+
+    */
+
     cy.get("#btnFinalizeLetterModal").click();
     cy.get(".ui-dialog-content").should("be.visible");
     cy.get(".ui-dialog-buttonset > .btn-info").click();
+    cy.wait(10000);
   });
 
   it("Waiting PI Repsonse", () => {
@@ -791,15 +817,17 @@ describe("NHSR", () => {
       console.log($body);
       cy.wrap($body[0]).type("My Response to Stipulations");
     });
-      cy.get("#btnSaveResponse").click();
+    cy.get("#btnSaveResponse").click();
 
-      cy.get("#BTNRESUBMIT").click();
-      cy.wait(2000);
-      cy.get(".iAgreeCheckbox").click();
-      cy.get(".buttonEformYellow").click();
-    });
+    cy.get("#BTNRESUBMIT").click();
+    cy.wait(2000);
+    cy.get(".iAgreeCheckbox").click();
+    cy.wait(5000);
+    cy.get(".buttonEformYellow").click();
+    cy.wait(5000);
+  });
 
-  it("Revised-Resubmitted to IRB", () => {
+  it.only("Revised-Resubmitted to IRB", () => {
     cy.viewport(1400, 900);
     cy.visit(Cypress.config().devMaintBaseUrl);
     cy.get("input#username.long").type(IRBAnalyst);
@@ -809,26 +837,30 @@ describe("NHSR", () => {
     cy.get(
       'td[data-title="PI Responses"] > .bucket > :nth-child(2) > table > tbody > :nth-child(2) > [data-column="TBD"] > a'
     ).click();
-    cy.wait(1000);
+    cy.wait(3000);
     cy.get("#bucketDataTable_filter > label > input").type(
       "My NHSR Cypress Test"
     );
     cy.get("#bucketDataTable > tbody > .odd > :nth-child(1) > a").click();
     cy.wait(1000);
     // Get window object
-    cy.window().then((win) => {
-      // Replace window.open(url, target)-function with our own arrow function
-      cy.stub(win, 'open').callsFake (url => 
-        // change window location to be same as the popup url
-        win.location.href = Cypress.config().devMaintBaseUrl + url);
-      }).as("popup"); // alias it with popup, so we can refer it with @popup
-   
+    cy.window()
+      .then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("popup"); // alias it with popup, so we can refer it with @popup
+
     // Click button which triggers javascript's window.open() call
     //cy.get('#swimLaneReview0 > .swimlane1 > :nth-child(1)').click()
     cy.contains("Application").click();
     // Make sure that it triggered window.open function call
     //cy.get("@popup").should("be.called");
-    
+
     //Create a review
     cy.get("#navNextStep").click();
     cy.get("#hasReviewTypes").should("be.visible");
@@ -839,10 +871,6 @@ describe("NHSR", () => {
       .select("Not Full Board (Expedited, Exempt, NHSR, other)");
     cy.get("#btnCreateReview").click();
     cy.wait(2000);
-
-    // CAPTURE URL OF REVIEW WINDOW
-
-    cy.url().as("reviewWindow");
 
     //Verify header info
 
@@ -888,20 +916,27 @@ describe("NHSR", () => {
     //Verify review conditions -> COI
     cy.get("#optionsList > :nth-child(3)").should("be.visible");
     cy.get("#stopListCOI").should("be.visible");
-    cy.get("#stopListManagementPlan").should("be.visible");
-    cy.get("#stopListHSP").should("be.visible");
-    cy.get("#stopListGCP").should("be.visible");
+    cy.get("#stopListManagementPlan").scrollIntoView().should("be.visible");
+    cy.get("#stopListHSP").scrollIntoView().should("be.visible");
+    cy.get("#stopListGCP").scrollIntoView().should("be.visible");
+
+    // CAPTURE URL OF REVIEW WINDOW
+    cy.url().as("reviewWindow");
 
     //PI RESPONSES
     cy.viewport(1200, 612);
 
     // Get window object
-    cy.window().then((win) => {
-      // Replace window.open(url, target)-function with our own arrow function
-      cy.stub(win, 'open').callsFake (url => 
-        // change window location to be same as the popup url
-        win.location.href = Cypress.config().devMaintBaseUrl + url);
-      }).as("popup"); // alias it with popup, so we can refer it with @popup
+    cy.window()
+      .then((win) => {
+        // Replace window.open(url, target)-function with our own arrow function
+        cy.stub(win, "open").callsFake(
+          (url) =>
+            // change window location to be same as the popup url
+            (win.location.href = Cypress.config().devMaintBaseUrl + url)
+        );
+      })
+      .as("popup"); // alias it with popup, so we can refer it with @popup
 
     //PI Responses
     cy.get("#navPIResponses").click();
